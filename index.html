@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Divas</title>
+  <meta name="description" content="3D Divas — browse 3D printer options and email us the model you want." />
+  <style>
+    :root{
+      --honeydew:#ddf8e8;
+      --egyptian-blue:#38369a;
+      --light-coral:#e0777d;
+      --wisteria-blue:#7b8cde;
+      --wisteria-blue-2:#81a4cd;
+
+      --bg: var(--honeydew);
+      --text: #111827;
+      --muted: #475569;
+
+      --card: #ffffff;
+      --border: rgba(56,54,154,.18);
+
+      --primary: var(--egyptian-blue);
+      --primary-2: var(--wisteria-blue);
+      --accent: var(--light-coral);
+
+      --shadow: 0 12px 34px rgba(0,0,0,.08);
+      --radius: 18px;
+      --radius-lg: 26px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(123,140,222,.22), transparent 35%),
+        radial-gradient(circle at 92% 10%, rgba(224,119,125,.20), transparent 35%),
+        radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
+        var(--bg);
+    }
+
+    a{ color:inherit; }
+
+    .container{
+      width:min(1100px, calc(100% - 40px));
+      margin:0 auto;
+    }
+
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(221,248,232,.72);
+      border-bottom: 1px solid rgba(56,54,154,.12);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+    }
+    .logo{
+      width:40px;
+      height:40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(circle, rgba(255,255,255,.55), transparent 55%);
+      transform: rotate(15deg);
+    }
+    .brand h1{
+      font-size: 18px;
+      margin:0;
+      line-height:1.1;
+      letter-spacing:.2px;
+    }
+    .brand small{
+      display:block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top:2px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.72);
+      padding: 8px 12px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-size: 13px;
+      color: var(--primary);
+    }
+    .chip:hover{ filter: brightness(1.02); }
+
+    .btn{
+      background: var(--primary);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+      cursor:pointer;
+    }
+    .btn:hover{ filter: brightness(1.05); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-secondary{
+      background: rgba(255,255,255,.86);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      box-shadow: none;
+      font-weight: 600;
+    }
+
+    .icon{
+      width:18px; height:18px;
+      display:inline-block;
+    }
+
+    /* Hero */
+    .hero{
+      padding: 40px 0 22px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .hero-card{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.78);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(135deg, rgba(56,54,154,.16), rgba(224,119,125,.14), rgba(123,140,222,.12));
+      filter: blur(18px);
+      z-index:0;
+    }
+    .hero-card > *{ position:relative; z-index:1; }
+
+    .headline{
+      font-size: clamp(28px, 3.4vw, 44px);
+      margin:0 0 10px;
+      line-height:1.05;
+      letter-spacing:-.4px;
+    }
+    .subhead{
+      margin:0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+      max-width: 62ch;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 10px;
+    }
+
+    .badge{
+      background: rgba(224,119,125,.18);
+      color: #7a1c22;
+      border: 1px solid rgba(224,119,125,.25);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .side-card{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.82);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    .side-card h3{
+      margin:0 0 10px;
+      font-size: 16px;
+      color: var(--primary);
+    }
+    .side-card p{
+      margin:0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.5;
+    }
+    .list{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.6;
+    }
+
+    /* Controls */
+    .section{
+      padding: 18px 0 40px;
+    }
+    .section-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+    .section-header h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:-.2px;
+    }
+    .section-header p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin: 10px 0 18px;
+    }
+    .input{
+      flex: 1 1 260px;
+      min-width: 220px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.86);
+      border-radius: 999px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline:none;
+    }
+    .select{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.86);
+      border-radius: 999px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline:none;
+      cursor:pointer;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height: 240px;
+    }
+
+    .thumb{
+      height: 120px;
+      border-radius: 14px;
+      border: 1px dashed rgba(56,54,154,.25);
+      background:
+        linear-gradient(135deg, rgba(123,140,222,.16), rgba(129,164,205,.10)),
+        rgba(255,255,255,.55);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(56,54,154,.65);
+      font-weight:700;
+      letter-spacing:.6px;
+      text-transform: uppercase;
+      font-size: 12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle, rgba(224,119,125,.22), transparent 55%);
+      transform: rotate(-12deg);
+    }
+
+    .card h3{
+      margin:0;
+      font-size: 16px;
+      letter-spacing:-.2px;
+    }
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+    .pill{
+      border:1px solid rgba(56,54,154,.18);
+      background: rgba(123,140,222,.14);
+      color: rgba(56,54,154,.92);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pill.accent{
+      background: rgba(224,119,125,.14);
+      border-color: rgba(224,119,125,.22);
+      color: #7a1c22;
+    }
+
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .card-actions{
+      margin-top:auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer{
+      padding: 22px 0 38px;
+      border-top: 1px solid rgba(56,54,154,.12);
+      background: rgba(221,248,232,.55);
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+    @media (max-width: 800px){
+      .footer-grid{ grid-template-columns: 1fr; }
+    }
+    .footer-card{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.78);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .footer-card h4{
+      margin:0 0 8px;
+      color: var(--primary);
+    }
+    .footer-card p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 14px;
+    }
+    .tiny{
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(71,85,105,.9);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <a class="brand" href="#top" aria-label="3D Divas Home">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>3D Divas</h1>
+            <small>Family-friendly 3D printing options</small>
+          </div>
+        </a>
+
+        <div class="nav-links">
+          <a class="chip" href="#printers">Printers</a>
+          <a class="chip" href="#how">How it works</a>
+          <a class="chip" href="#safety">Safety</a>
+          <a class="btn btn-secondary" href="#contact">Email</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-card">
+            <span class="badge">
+              <!-- simple icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17h10M8 7h8l2 4H6l2-4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 11v6m6-6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              No comments • No chat • Email-only
+            </span>
+
+            <h2 class="headline">Pick a 3D printer, then email the model you want.</h2>
+            <p class="subhead">
+              Welcome to <strong>3D Divas</strong> — a simple, safe way for friends and family to browse 3D printer options.
+              There are no public posts or messages on this website. If you want to reach us, the Email buttons open your email app so we can review everything.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn" href="#printers">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h16M4 12h10M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Browse Printers
+              </a>
+
+              <a class="btn btn-secondary" href="#how">
+                How it works
+              </a>
+            </div>
+          </div>
+
+          <aside class="side-card" id="how">
+            <h3>How it works</h3>
+            <p>
+              1) Browse options below.<br/>
+              2) Click <strong>Email about this model</strong>.<br/>
+              3) Your email app opens with the model name filled in.
+            </p>
+            <ul class="list">
+              <li>Works on phones, tablets, and computers.</li>
+              <li>No accounts. No logins.</li>
+              <li>No comments or on-site messaging.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINTERS -->
+    <section class="section" id="printers">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Printer Options</h2>
+            <p>Filter, compare, and email the model you want.</p>
+          </div>
+          <p class="small" id="resultsCount"></p>
+        </div>
+
+        <div class="controls" aria-label="Filters">
+          <input class="input" id="searchInput" type="search" placeholder="Search printers (ex: beginner, fast, resin, enclosure…)" />
+          <select class="select" id="typeFilter" aria-label="Filter by type">
+            <option value="all">All types</option>
+            <option value="FDM">FDM (filament)</option>
+            <option value="Resin">Resin</option>
+          </select>
+          <select class="select" id="levelFilter" aria-label="Filter by level">
+            <option value="all">All levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Pro">Pro</option>
+          </select>
+        </div>
+
+        <div class="grid" id="printerGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- SAFETY -->
+    <section class="section" id="safety">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Safety & Communication</h2>
+            <p>Designed for a 6th grader: no public interaction on the site.</p>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="card">
+            <h3>What this site does not allow</h3>
+            <p class="desc">
+              There are <strong>no comments</strong>, <strong>no direct messages</strong>, <strong>no chat</strong>, and <strong>no public posting</strong>.
+              Visitors can only click an Email button that opens their own email app.
+            </p>
+            <div class="meta">
+              <span class="pill accent">No comments</span>
+              <span class="pill accent">No chat</span>
+              <span class="pill accent">No accounts</span>
+            </div>
+          </div>
+
+          <div class="card" id="contact">
+            <h3>Email us</h3>
+            <p class="desc">
+              Use the button below to email us. We’ll review all messages and reply from our inbox.
+            </p>
+            <div class="card-actions">
+              <a class="btn" id="generalEmailBtn" href="#">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+                  <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Email 3D Divas
+              </a>
+              <span class="small">Opens your email app (no on-site form).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-card">
+          <h4>About 3D Divas</h4>
+          <p>
+            A simple family site to share printer options and collect requests by email.
+            Everything stays private in our inbox—nothing is posted publicly.
+          </p>
+          <div class="tiny">© <span id="year"></span> 3D Divas</div>
+        </div>
+
+        <div class="footer-card">
+          <h4>Tip</h4>
+          <p>
+            If you later decide you want a custom domain, you can host this same file on GitHub Pages
+            (free) or a simple host — but the page works fine as-is in a preview or shared link.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =========================
+    // CONFIG — CHANGE THIS ONLY
+    // =========================
+    const SITE_EMAIL = "YOUR_EMAIL_HERE"; // <-- put your email here (example: stewart@example.com)
+
+    // =========================
+    // DATA — EDIT THESE PRINTERS
+    // =========================
+    const printers = [
+      {
+        name: "Starter FDM Printer",
+        type: "FDM",
+        level: "Beginner",
+        highlights: ["Easy setup", "Great for PLA", "Everyday family projects"],
+        desc: "A friendly filament printer option for learning the basics and printing common models.",
+        buildVolume: "220×220×250 mm"
+      },
+      {
+        name: "Fast FDM Printer",
+        type: "FDM",
+        level: "Intermediate",
+        highlights: ["High speed", "Auto leveling", "Great for bigger batches"],
+        desc: "A faster filament printer for people who want quicker prints without losing quality.",
+        buildVolume: "256×256×256 mm"
+      },
+      {
+        name: "Enclosed FDM Printer",
+        type: "FDM",
+        level: "Intermediate",
+        highlights: ["Enclosure", "More material options", "Cleaner prints"],
+        desc: "An enclosed filament printer for more consistent results and better temperature control.",
+        buildVolume: "300×300×300 mm"
+      },
+      {
+        name: "Beginner Resin Printer",
+        type: "Resin",
+        level: "Beginner",
+        highlights: ["High detail", "Smooth finish", "Miniatures & small parts"],
+        desc: "A resin option for super fine details and clean surfaces (requires resin handling).",
+        buildVolume: "Approx. 130×80×160 mm"
+      },
+      {
+        name: "Pro Resin Printer",
+        type: "Resin",
+        level: "Pro",
+        highlights: ["Ultra detail", "Larger resin volume", "Professional results"],
+        desc: "A higher-end resin printer for advanced detail work and higher output needs.",
+        buildVolume: "Approx. 220×125×230 mm"
+      },
+      {
+        name: "Pro FDM Printer",
+        type: "FDM",
+        level: "Pro",
+        highlights: ["Reliable", "Great for PETG/ABS", "Workshop ready"],
+        desc: "A professional filament printer option for serious projects and consistent output.",
+        buildVolume: "350×350×350 mm"
+      }
+    ];
+
+    // =========================
+    // UTIL
+    // =========================
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function mailtoForModel(modelName){
+      const subject = `3D Divas - Printer Request: ${modelName}`;
+      const body =
+`Hi Stewart,
+
+I’m interested in the printer model: ${modelName}
+
+What I want to print:
+- 
+
+Questions:
+- 
+
+Thanks!`;
+      const href = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return href;
+    }
+
+    function generalMailto(){
+      const subject = "3D Divas - Question";
+      const body =
+`Hi Stewart,
+
+I have a question about 3D Divas.
+
+My question:
+- 
+
+Thanks!`;
+      return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    // =========================
+    // RENDER
+    // =========================
+    const grid = document.getElementById("printerGrid");
+    const resultsCount = document.getElementById("resultsCount");
+    const searchInput = document.getElementById("searchInput");
+    const typeFilter = document.getElementById("typeFilter");
+    const levelFilter = document.getElementById("levelFilter");
+    const generalEmailBtn = document.getElementById("generalEmailBtn");
+
+    generalEmailBtn.setAttribute("href", generalMailto());
+
+    function matches(printer, q, type, level){
+      const haystack = [
+        printer.name,
+        printer.type,
+        printer.level,
+        printer.desc,
+        printer.buildVolume,
+        ...(printer.highlights || [])
+      ].join(" ").toLowerCase();
+
+      const queryOk = !q || haystack.includes(q);
+      const typeOk = (type === "all") || (printer.type === type);
+      const levelOk = (level === "all") || (printer.level === level);
+      return queryOk && typeOk && levelOk;
+    }
+
+    function render(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+      const type = typeFilter.value;
+      const level = levelFilter.value;
+
+      const filtered = printers.filter(p => matches(p, q, type, level));
+
+      resultsCount.textContent = `${filtered.length} option${filtered.length === 1 ? "" : "s"} shown`;
+
+      grid.innerHTML = filtered.map(p => {
+        const safeName = escapeHtml(p.name);
+        const safeDesc = escapeHtml(p.desc);
+        const safeVol = escapeHtml(p.buildVolume);
+
+        const highlights = (p.highlights || []).slice(0,3).map(h =>
+          `<span class="pill">${escapeHtml(h)}</span>`
+        ).join("");
+
+        return `
+          <article class="card">
+            <div class="thumb" aria-hidden="true">3D Divas</div>
+
+            <div>
+              <h3>${safeName}</h3>
+              <div class="meta" style="margin-top:8px;">
+                <span class="pill">${escapeHtml(p.type)}</span>
+                <span class="pill">${escapeHtml(p.level)}</span>
+                <span class="pill accent">Build: ${safeVol}</span>
+              </div>
+            </div>
+
+            <p class="desc">${safeDesc}</p>
+
+            <div class="meta">${highlights}</div>
+
+            <div class="card-actions">
+              <a class="btn" href="${mailtoForModel(p.name)}">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+                  <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Email about this model
+              </a>
+              <span class="small">Prefills model name</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      if(filtered.length === 0){
+        grid.innerHTML = `
+          <div class="card" style="grid-column: 1 / -1;">
+            <h3>No matches</h3>
+            <p class="desc">Try a different search term or clear the filters.</p>
+          </div>
+        `;
+      }
+    }
+
+    searchInput.addEventListener("input", render);
+    typeFilter.addEventListener("change", render);
+    levelFilter.addEventListener("change", render);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
