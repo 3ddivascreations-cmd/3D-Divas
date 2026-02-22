@@ -130,7 +130,7 @@
       display: inline-flex;
       gap: 10px;
       align-items: center;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
       cursor:pointer;
       user-select:none;
@@ -144,7 +144,7 @@
       color: var(--primary);
       border: 1px solid var(--border);
       box-shadow: none;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .icon{ width:18px; height:18px; display:inline-block; }
@@ -186,7 +186,7 @@
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -311,11 +311,11 @@
       display:flex;
       flex-direction:column;
       gap:12px;
-      min-height: 270px;
+      min-height: 290px;
     }
 
     .thumb{
-      height: 132px;
+      height: 180px; /* a little taller so products look better */
       border-radius: 14px;
       border: 1px dashed rgba(56,54,154,.25);
       background:
@@ -325,19 +325,13 @@
       align-items:center;
       justify-content:center;
       color: rgba(56,54,154,.65);
-      font-weight:800;
+      font-weight:900;
       letter-spacing:.8px;
       text-transform: uppercase;
       font-size: 12px;
       position:relative;
       overflow:hidden;
-    }
-    .thumb::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: radial-gradient(circle, rgba(224,119,125,.22), transparent 55%);
-      transform: rotate(-12deg);
+      cursor: zoom-in;
     }
     .thumb span{
       position:relative;
@@ -346,6 +340,14 @@
       border-radius: 999px;
       background: rgba(255,255,255,.6);
       border: 1px solid rgba(56,54,154,.18);
+    }
+    .thumb:focus{ outline:none; box-shadow: var(--focus); }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:14px;
+      display:block;
     }
 
     .title-row{
@@ -378,7 +380,7 @@
       padding: 5px 10px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
     }
     .pill.accent{
       background: rgba(224,119,125,.14);
@@ -461,6 +463,71 @@
       font-size: 12px;
       color: rgba(56,54,154,.95);
     }
+
+    /* Lightbox modal */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(17,24,39,.72);
+      z-index: 1000;
+    }
+    .modal[aria-hidden="false"]{ display:flex; }
+    .modal-dialog{
+      width: min(1100px, 100%);
+      max-height: min(88vh, 900px);
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(56,54,154,.22);
+      border-radius: 18px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.25);
+      overflow: hidden;
+    }
+    .modal-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(221,248,232,.75);
+      border-bottom: 1px solid rgba(56,54,154,.14);
+    }
+    .modal-title{
+      font-weight: 900;
+      color: var(--primary);
+      font-size: 14px;
+      line-height:1.2;
+      margin:0;
+    }
+    .modal-close{
+      appearance:none;
+      border: 1px solid rgba(56,54,154,.18);
+      background: rgba(255,255,255,.9);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 900;
+    }
+    .modal-close:focus{ outline:none; box-shadow: var(--focus); }
+    .modal-body{
+      background: rgba(255,255,255,.9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px;
+    }
+    .modal-img{
+      max-width: 100%;
+      max-height: calc(88vh - 64px);
+      width: auto;
+      height: auto;
+      border-radius: 14px;
+      object-fit: contain;
+      background: rgba(56,54,154,.04);
+    }
   </style>
 </head>
 
@@ -487,7 +554,6 @@
   </header>
 
   <main id="top">
-    <!-- HERO -->
     <section class="hero">
       <div class="container">
         <div class="hero-grid">
@@ -514,13 +580,12 @@
                 Browse Models
               </a>
 
-              <a class="btn btn-secondary" href="#how">
-                How it works
-              </a>
+              <a class="btn btn-secondary" href="#how">How it works</a>
             </div>
 
             <div class="note" style="margin-top:14px;">
-              Tip: You can edit the models list in this file. Search for <code class="kbd">const models =</code> and change names, prices, colors, sizes, and descriptions.
+              Thumbnails use <code class="kbd">images/thumbs/</code>. Full images use <code class="kbd">images/</code>.
+              If a thumbnail is missing, the card will automatically fall back to the full image.
             </div>
           </div>
 
@@ -541,18 +606,18 @@
       </div>
     </section>
 
-    <!-- SHOP -->
     <section class="section" id="shop">
       <div class="container">
         <div class="section-header">
           <div>
             <h2>Shop Models</h2>
-            <p>Search and filter, then email your request.</p>
+            <p>Click a thumbnail to preview full-size.</p>
           </div>
         </div>
 
+        <!-- role="region" makes the aria-label linter happy -->
         <div class="controls" role="region" aria-label="Filters">
-          <input class="input" id="searchInput" type="search" placeholder="Search models (ex: dragon, fidget, keychain, seasonal…)" />
+          <input class="input" id="searchInput" type="search" placeholder="Search models (ex: dragon, keychain, planter…)" />
 
           <select class="select" id="categoryFilter" aria-label="Filter by category">
             <option value="all">All categories</option>
@@ -569,14 +634,9 @@
         </div>
 
         <div class="grid" id="modelGrid" aria-live="polite"></div>
-
-        <div class="note" style="margin-top:14px;">
-          Want to add photos later? Replace the “3D Divas” placeholder in each card with an <code class="kbd">&lt;img&gt;</code> tag (or use a real image URL).
-        </div>
       </div>
     </section>
 
-    <!-- SAFETY + CONTACT -->
     <section class="section" id="safety">
       <div class="container">
         <div class="section-header">
@@ -603,9 +663,7 @@
 
           <div class="card" id="contact">
             <h3>Email 3D Divas</h3>
-            <p class="desc">
-              Use the button below to send a general question or request. (No on-site forms.)
-            </p>
+            <p class="desc">Use the button below to send a general question or request. (No on-site forms.)</p>
             <div class="card-actions">
               <a class="btn" id="generalEmailBtn" href="#">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -618,7 +676,7 @@
             </div>
 
             <div class="note" style="margin-top:12px;">
-              If the Email button doesn’t open on someone’s device, they can copy the address from the page source or message you privately for the email address.
+              If the Email button doesn’t open on someone’s device, ask them to email you directly and you’ll reply with details.
             </div>
           </div>
         </div>
@@ -631,33 +689,40 @@
       <div class="two-col">
         <div class="footer-card">
           <h4>About 3D Divas</h4>
-          <p>
-            3D Divas is a family-friendly page for sharing 3D printed models. Requests are handled by email so nothing is posted publicly.
-          </p>
+          <p>3D Divas is a family-friendly page for sharing 3D printed models. Requests are handled by email so nothing is posted publicly.</p>
           <div class="tiny">© <span id="year"></span> 3D Divas</div>
         </div>
 
         <div class="footer-card">
           <h4>Owner Note</h4>
-          <p>
-            Prices shown are “starting at” unless you specify otherwise. Size, color, and quantity can change the final cost.
-            We confirm everything by email before printing.
-          </p>
+          <p>Prices shown are “starting at.” Size, color, and quantity can change the final cost. We confirm everything by email before printing.</p>
         </div>
       </div>
     </div>
   </footer>
 
+  <!-- Image Modal -->
+  <div class="modal" id="imgModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
+    <div class="modal-dialog" role="document">
+      <div class="modal-topbar">
+        <p class="modal-title" id="imgModalTitle">Preview</p>
+        <button class="modal-close" type="button" id="imgModalClose" aria-label="Close preview">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <img class="modal-img" id="imgModalImg" alt="" />
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============================================================
-    // 1) CHANGE THIS EMAIL (PARENT INBOX) THEN SAVE THE FILE
+    // CHANGE THIS EMAIL (PARENT INBOX)
     // ============================================================
     const SITE_EMAIL = "YOUR_EMAIL_HERE"; // example: stewart@example.com
 
     // ============================================================
-    // 2) EDIT YOUR MODEL LIST HERE
-    //    - Add / remove items
-    //    - Update price, sizes, colors, category, description
+    // MODELS (using YOUR existing full-size image names)
+    // Thumbnails are expected in: images/thumbs/<filename>
     // ============================================================
     const models = [
       {
@@ -669,7 +734,8 @@
         colors: ["Purple", "Blue", "Pink", "Black", "White"],
         turnaround: "2–5 days",
         desc: "A fun articulated dragon that wiggles and poses great on a desk.",
-          image: "images/flexi-dragon.png"
+        thumb: "images/thumbs/flexi-dragon.png",
+        image: "images/flexi-dragon.png"
       },
       {
         name: "Cute Axolotl",
@@ -680,7 +746,8 @@
         colors: ["Pink", "Mint", "White", "Rainbow (ask)"],
         turnaround: "2–5 days",
         desc: "A sweet little axolotl — great gift or shelf buddy.",
-          image: "images/axolotl.png"
+        thumb: "images/thumbs/axolotl.png",
+        image: "images/axolotl.png"
       },
       {
         name: "Fidget Spiral",
@@ -691,7 +758,8 @@
         colors: ["Red", "Blue", "Green", "Purple", "Two-tone (ask)"],
         turnaround: "1–3 days",
         desc: "A satisfying fidget that spins and clicks gently.",
-          image: "images/fidget_spiral.png"
+        thumb: "images/thumbs/fidget_spiral.png",
+        image: "images/fidget_spiral.png"
       },
       {
         name: "Heart Keychain",
@@ -702,7 +770,8 @@
         colors: ["Pink", "Red", "White", "Black"],
         turnaround: "1–3 days",
         desc: "A simple heart keychain. Add initials by request.",
-          image: "images/keychain_heart.png"
+        thumb: "images/thumbs/keychain_heart.png",
+        image: "images/keychain_heart.png"
       },
       {
         name: "Desk Name Plate",
@@ -713,7 +782,8 @@
         colors: ["White", "Black", "Blue", "Two-tone (ask)"],
         turnaround: "3–7 days",
         desc: "A custom name plate for desks. Email the name + color choice.",
-          image: "images/nameplate.png"
+        thumb: "images/thumbs/nameplate.png",
+        image: "images/nameplate.png"
       },
       {
         name: "Mini Planter",
@@ -724,7 +794,8 @@
         colors: ["White", "Gray", "Blue", "Pink"],
         turnaround: "2–5 days",
         desc: "A tiny planter for succulents or desk decor (liner recommended).",
-          image: "images/mini_planter.png"
+        thumb: "images/thumbs/mini_planter.png",
+        image: "images/mini_planter.png"
       },
       {
         name: "Snowflake Ornament",
@@ -735,9 +806,9 @@
         colors: ["White", "Silver (ask)", "Blue"],
         turnaround: "2–5 days",
         desc: "Seasonal ornament — lightweight and easy to hang.",
-          image: "images/ornament_snowflake.png"
-      },
-      
+        thumb: "images/thumbs/ornament_snowflake.png",
+        image: "images/ornament_snowflake.png"
+      }
     ];
 
     // ============================================================
@@ -798,6 +869,39 @@ Thanks!`;
     }
 
     // ============================================================
+    // Modal wiring
+    // ============================================================
+    const imgModal = document.getElementById("imgModal");
+    const imgModalImg = document.getElementById("imgModalImg");
+    const imgModalTitle = document.getElementById("imgModalTitle");
+    const imgModalClose = document.getElementById("imgModalClose");
+    let lastFocusEl = null;
+
+    function openModal(src, title){
+      if(!src) return;
+      lastFocusEl = document.activeElement;
+      imgModalTitle.textContent = title || "Preview";
+      imgModalImg.src = src;
+      imgModalImg.alt = title ? `${title} preview` : "Preview";
+      imgModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      imgModalClose.focus();
+    }
+
+    function closeModal(){
+      imgModal.setAttribute("aria-hidden", "true");
+      imgModalImg.src = "";
+      document.body.style.overflow = "";
+      if(lastFocusEl && typeof lastFocusEl.focus === "function") lastFocusEl.focus();
+    }
+
+    imgModal.addEventListener("click", (e) => { if(e.target === imgModal) closeModal(); });
+    imgModalClose.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && imgModal.getAttribute("aria-hidden") === "false") closeModal();
+    });
+
+    // ============================================================
     // Render
     // ============================================================
     const grid = document.getElementById("modelGrid");
@@ -807,7 +911,6 @@ Thanks!`;
     const sortSelect = document.getElementById("sortSelect");
     const generalEmailBtn = document.getElementById("generalEmailBtn");
 
-    // Set general email button
     generalEmailBtn.setAttribute("href", generalMailto());
 
     // Build category list
@@ -840,7 +943,6 @@ Thanks!`;
       else if(mode === "priceHigh") copy.sort((a,b)=>b.price - a.price);
       else if(mode === "nameAZ") copy.sort((a,b)=>a.name.localeCompare(b.name));
       else {
-        // Featured first, then name
         copy.sort((a,b)=>{
           const af = a.featured ? 1 : 0;
           const bf = b.featured ? 1 : 0;
@@ -882,22 +984,33 @@ Thanks!`;
         const sizeOptions = (m.sizes || ["One size"]).map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
         const colorOptions = (m.colors || ["Ask"]).map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
 
-        // unique ids for selects
         const sizeId = `size_${idx}`;
         const colorId = `color_${idx}`;
         const emailId = `email_${idx}`;
 
+        // Prefer thumb, but fallback to full in card if thumb missing
+        const thumbSrc = m.thumb || m.image || "";
+        const fullSrc = m.image || "";
+
         return `
           <article class="card">
-            <div class="thumb">
-  <img
-    src="${escapeHtml(m.image || '')}"
-    alt="${safeName} photo"
-    loading="lazy"
-    onerror="this.style.display='none'; this.parentElement.innerHTML='<span>3D Divas</span>';"
-    style="width:100%;height:100%;object-fit:cover;border-radius:14px;"
-  />
-</div>
+            <div class="thumb"
+                 role="button"
+                 tabindex="0"
+                 data-full="${escapeHtml(fullSrc)}"
+                 data-title="${safeName}"
+                 aria-label="Open image for ${safeName}">
+              ${
+                thumbSrc
+                  ? `<img
+                        src="${escapeHtml(thumbSrc)}"
+                        alt="${safeName} photo"
+                        loading="lazy"
+                        onerror="if(this.dataset.fallback!=='1'){this.dataset.fallback='1'; this.src='${escapeHtml(fullSrc)}';} else {this.remove(); this.parentElement.innerHTML='<span>3D Divas</span>';}"
+                      />`
+                  : `<span>3D Divas</span>`
+              }
+            </div>
 
             <div class="title-row">
               <div>
@@ -935,13 +1048,13 @@ Thanks!`;
                 </svg>
                 Request This Print
               </a>
-              <span class="small">Opens your email app with details filled in.</span>
+              <span class="small">Email opens with the details filled in.</span>
             </div>
           </article>
         `;
       }).join("");
 
-      // Wire up email links after render (so we include chosen size/color)
+      // Wire up mailto links after render
       sorted.forEach((m, idx) => {
         const sizeEl = document.getElementById(`size_${idx}`);
         const colorEl = document.getElementById(`color_${idx}`);
@@ -958,6 +1071,26 @@ Thanks!`;
         updateMailto();
       });
     }
+
+    // Event delegation for thumbnail modal (works after every re-render)
+    grid.addEventListener("click", (e) => {
+      const t = e.target.closest(".thumb");
+      if(!t) return;
+      const full = t.getAttribute("data-full");
+      const title = t.getAttribute("data-title") || "Preview";
+      openModal(full, title);
+    });
+
+    grid.addEventListener("keydown", (e) => {
+      const t = e.target.closest(".thumb");
+      if(!t) return;
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        const full = t.getAttribute("data-full");
+        const title = t.getAttribute("data-title") || "Preview";
+        openModal(full, title);
+      }
+    });
 
     searchInput.addEventListener("input", render);
     categoryFilter.addEventListener("change", render);
