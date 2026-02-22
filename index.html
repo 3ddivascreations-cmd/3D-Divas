@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>3D Divas</title>
-  <meta name="description" content="3D Divas — browse 3D printer options and email us the model you want." />
+  <title>3D Divas — 3D Printed Creations</title>
+  <meta name="description" content="3D Divas — browse 3D printed models and email to request a print." />
+
   <style>
     :root{
       --honeydew:#ddf8e8;
@@ -27,6 +28,7 @@
       --shadow: 0 12px 34px rgba(0,0,0,.08);
       --radius: 18px;
       --radius-lg: 26px;
+      --focus: 0 0 0 4px rgba(123,140,222,.25);
     }
 
     *{ box-sizing:border-box; }
@@ -43,9 +45,8 @@
     }
 
     a{ color:inherit; }
-
     .container{
-      width:min(1100px, calc(100% - 40px));
+      width:min(1120px, calc(100% - 40px));
       margin:0 auto;
     }
 
@@ -58,7 +59,6 @@
       background: rgba(221,248,232,.72);
       border-bottom: 1px solid rgba(56,54,154,.12);
     }
-
     .nav{
       display:flex;
       align-items:center;
@@ -66,7 +66,6 @@
       padding: 14px 0;
       gap:16px;
     }
-
     .brand{
       display:flex;
       align-items:center;
@@ -109,7 +108,6 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
-
     .chip{
       border:1px solid var(--border);
       background: rgba(255,255,255,.72);
@@ -132,40 +130,36 @@
       display: inline-flex;
       gap: 10px;
       align-items: center;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       cursor:pointer;
+      user-select:none;
     }
     .btn:hover{ filter: brightness(1.05); }
     .btn:active{ transform: translateY(1px); }
+    .btn:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
 
     .btn-secondary{
       background: rgba(255,255,255,.86);
       color: var(--primary);
       border: 1px solid var(--border);
       box-shadow: none;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .icon{
-      width:18px; height:18px;
-      display:inline-block;
-    }
+    .icon{ width:18px; height:18px; display:inline-block; }
 
     /* Hero */
-    .hero{
-      padding: 40px 0 22px;
-    }
+    .hero{ padding: 40px 0 18px; }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.25fr .75fr;
+      grid-template-columns: 1.2fr .8fr;
       gap: 18px;
       align-items: stretch;
     }
     @media (max-width: 900px){
       .hero-grid{ grid-template-columns: 1fr; }
     }
-
     .hero-card{
       border: 1px solid var(--border);
       background: rgba(255,255,255,.78);
@@ -175,7 +169,6 @@
       overflow:hidden;
       position:relative;
     }
-
     .hero-card::before{
       content:"";
       position:absolute;
@@ -186,28 +179,6 @@
     }
     .hero-card > *{ position:relative; z-index:1; }
 
-    .headline{
-      font-size: clamp(28px, 3.4vw, 44px);
-      margin:0 0 10px;
-      line-height:1.05;
-      letter-spacing:-.4px;
-    }
-    .subhead{
-      margin:0 0 16px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.5;
-      max-width: 62ch;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top: 10px;
-    }
-
     .badge{
       background: rgba(224,119,125,.18);
       color: #7a1c22;
@@ -215,10 +186,31 @@
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       display:inline-flex;
       align-items:center;
       gap:8px;
+    }
+
+    .headline{
+      font-size: clamp(28px, 3.4vw, 44px);
+      margin:12px 0 10px;
+      line-height:1.05;
+      letter-spacing:-.4px;
+    }
+    .subhead{
+      margin:0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 68ch;
+    }
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 12px;
     }
 
     .side-card{
@@ -231,25 +223,24 @@
       margin:0 0 10px;
       font-size: 16px;
       color: var(--primary);
+      letter-spacing:-.2px;
     }
     .side-card p{
       margin:0 0 12px;
       color: var(--muted);
       font-size: 14px;
-      line-height:1.5;
+      line-height:1.6;
     }
     .list{
       margin:0;
       padding-left: 18px;
       color: var(--muted);
       font-size: 14px;
-      line-height:1.6;
+      line-height:1.7;
     }
 
-    /* Controls */
-    .section{
-      padding: 18px 0 40px;
-    }
+    /* Sections */
+    .section{ padding: 18px 0 40px; }
     .section-header{
       display:flex;
       justify-content:space-between;
@@ -267,8 +258,10 @@
       margin:0;
       color: var(--muted);
       font-size: 14px;
+      line-height:1.4;
     }
 
+    /* Controls */
     .controls{
       display:flex;
       gap:10px;
@@ -276,9 +269,7 @@
       align-items:center;
       margin: 10px 0 18px;
     }
-    .input{
-      flex: 1 1 260px;
-      min-width: 220px;
+    .input, .select{
       border:1px solid var(--border);
       background: rgba(255,255,255,.86);
       border-radius: 999px;
@@ -286,14 +277,16 @@
       font-size: 14px;
       outline:none;
     }
-    .select{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.86);
-      border-radius: 999px;
-      padding: 12px 14px;
-      font-size: 14px;
-      outline:none;
-      cursor:pointer;
+    .input{
+      flex: 1 1 320px;
+      min-width: 220px;
+    }
+    .input:focus, .select:focus{ box-shadow: var(--focus); }
+
+    .results{
+      font-size: 12px;
+      color: rgba(71,85,105,.95);
+      margin-left:auto;
     }
 
     /* Grid */
@@ -310,7 +303,7 @@
     }
 
     .card{
-      background: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.92);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -318,11 +311,11 @@
       display:flex;
       flex-direction:column;
       gap:12px;
-      min-height: 240px;
+      min-height: 270px;
     }
 
     .thumb{
-      height: 120px;
+      height: 132px;
       border-radius: 14px;
       border: 1px dashed rgba(56,54,154,.25);
       background:
@@ -332,8 +325,8 @@
       align-items:center;
       justify-content:center;
       color: rgba(56,54,154,.65);
-      font-weight:700;
-      letter-spacing:.6px;
+      font-weight:800;
+      letter-spacing:.8px;
       text-transform: uppercase;
       font-size: 12px;
       position:relative;
@@ -346,12 +339,32 @@
       background: radial-gradient(circle, rgba(224,119,125,.22), transparent 55%);
       transform: rotate(-12deg);
     }
+    .thumb span{
+      position:relative;
+      z-index:1;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(56,54,154,.18);
+    }
 
+    .title-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
     .card h3{
       margin:0;
       font-size: 16px;
       letter-spacing:-.2px;
     }
+    .price{
+      font-weight: 900;
+      color: var(--primary);
+      white-space:nowrap;
+    }
+
     .meta{
       display:flex;
       flex-wrap:wrap;
@@ -365,7 +378,7 @@
       padding: 5px 10px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
     }
     .pill.accent{
       background: rgba(224,119,125,.14);
@@ -377,7 +390,7 @@
       margin:0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .card-actions{
@@ -389,23 +402,24 @@
     }
     .small{
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(71,85,105,.95);
+      line-height:1.35;
     }
 
-    /* Footer */
+    /* Safety + Footer */
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 800px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+
     footer{
       padding: 22px 0 38px;
       border-top: 1px solid rgba(56,54,154,.12);
       background: rgba(221,248,232,.55);
-    }
-    .footer-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items:start;
-    }
-    @media (max-width: 800px){
-      .footer-grid{ grid-template-columns: 1fr; }
     }
     .footer-card{
       border:1px solid var(--border);
@@ -416,17 +430,36 @@
     .footer-card h4{
       margin:0 0 8px;
       color: var(--primary);
+      letter-spacing:-.2px;
     }
     .footer-card p{
       margin:0;
       color: var(--muted);
-      line-height:1.6;
+      line-height:1.7;
       font-size: 14px;
     }
     .tiny{
       margin-top: 12px;
       font-size: 12px;
       color: rgba(71,85,105,.9);
+    }
+    .note{
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(56,54,154,.12);
+      border-radius: 14px;
+      padding: 12px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.5;
+    }
+    code.kbd{
+      background: rgba(56,54,154,.08);
+      border: 1px solid rgba(56,54,154,.14);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      color: rgba(56,54,154,.95);
     }
   </style>
 </head>
@@ -439,12 +472,12 @@
           <div class="logo" aria-hidden="true"></div>
           <div>
             <h1>3D Divas</h1>
-            <small>Family-friendly 3D printing options</small>
+            <small>3D printed models • email-only requests</small>
           </div>
         </a>
 
         <div class="nav-links">
-          <a class="chip" href="#printers">Printers</a>
+          <a class="chip" href="#shop">Shop</a>
           <a class="chip" href="#how">How it works</a>
           <a class="chip" href="#safety">Safety</a>
           <a class="btn btn-secondary" href="#contact">Email</a>
@@ -460,7 +493,6 @@
         <div class="hero-grid">
           <div class="hero-card">
             <span class="badge">
-              <!-- simple icon -->
               <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M7 17h10M8 7h8l2 4H6l2-4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M9 11v6m6-6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -468,101 +500,111 @@
               No comments • No chat • Email-only
             </span>
 
-            <h2 class="headline">Pick a 3D printer, then email the model you want.</h2>
+            <h2 class="headline">Cute, fun, and custom 3D printed creations.</h2>
             <p class="subhead">
-              Welcome to <strong>3D Divas</strong> — a simple, safe way for friends and family to browse 3D printer options.
-              There are no public posts or messages on this website. If you want to reach us, the Email buttons open your email app so we can review everything.
+              Browse our models below, then click <strong>Request This Print</strong>.
+              It opens your email app with the model name already filled in, so we can review requests and reply from our inbox.
             </p>
 
             <div class="hero-actions">
-              <a class="btn" href="#printers">
+              <a class="btn" href="#shop">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M4 6h16M4 12h10M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                Browse Printers
+                Browse Models
               </a>
 
               <a class="btn btn-secondary" href="#how">
                 How it works
               </a>
             </div>
+
+            <div class="note" style="margin-top:14px;">
+              Tip: You can edit the models list in this file. Search for <code class="kbd">const models =</code> and change names, prices, colors, sizes, and descriptions.
+            </div>
           </div>
 
           <aside class="side-card" id="how">
             <h3>How it works</h3>
             <p>
-              1) Browse options below.<br/>
-              2) Click <strong>Email about this model</strong>.<br/>
-              3) Your email app opens with the model name filled in.
+              1) Browse models below.<br/>
+              2) Choose size + color (optional).<br/>
+              3) Click <strong>Request This Print</strong> to email us.
             </p>
             <ul class="list">
               <li>Works on phones, tablets, and computers.</li>
-              <li>No accounts. No logins.</li>
-              <li>No comments or on-site messaging.</li>
+              <li>No logins, accounts, comments, or public messages.</li>
+              <li>All requests go to a parent inbox for review.</li>
             </ul>
           </aside>
         </div>
       </div>
     </section>
 
-    <!-- PRINTERS -->
-    <section class="section" id="printers">
+    <!-- SHOP -->
+    <section class="section" id="shop">
       <div class="container">
         <div class="section-header">
           <div>
-            <h2>Printer Options</h2>
-            <p>Filter, compare, and email the model you want.</p>
+            <h2>Shop Models</h2>
+            <p>Search and filter, then email your request.</p>
           </div>
-          <p class="small" id="resultsCount"></p>
         </div>
 
         <div class="controls" aria-label="Filters">
-          <input class="input" id="searchInput" type="search" placeholder="Search printers (ex: beginner, fast, resin, enclosure…)" />
-          <select class="select" id="typeFilter" aria-label="Filter by type">
-            <option value="all">All types</option>
-            <option value="FDM">FDM (filament)</option>
-            <option value="Resin">Resin</option>
+          <input class="input" id="searchInput" type="search" placeholder="Search models (ex: dragon, fidget, keychain, seasonal…)" />
+
+          <select class="select" id="categoryFilter" aria-label="Filter by category">
+            <option value="all">All categories</option>
           </select>
-          <select class="select" id="levelFilter" aria-label="Filter by level">
-            <option value="all">All levels</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Pro">Pro</option>
+
+          <select class="select" id="sortSelect" aria-label="Sort models">
+            <option value="featured">Sort: Featured</option>
+            <option value="priceLow">Price: Low to High</option>
+            <option value="priceHigh">Price: High to Low</option>
+            <option value="nameAZ">Name: A to Z</option>
           </select>
+
+          <div class="results" id="resultsCount"></div>
         </div>
 
-        <div class="grid" id="printerGrid" aria-live="polite"></div>
+        <div class="grid" id="modelGrid" aria-live="polite"></div>
+
+        <div class="note" style="margin-top:14px;">
+          Want to add photos later? Replace the “3D Divas” placeholder in each card with an <code class="kbd">&lt;img&gt;</code> tag (or use a real image URL).
+        </div>
       </div>
     </section>
 
-    <!-- SAFETY -->
+    <!-- SAFETY + CONTACT -->
     <section class="section" id="safety">
       <div class="container">
         <div class="section-header">
           <div>
             <h2>Safety & Communication</h2>
-            <p>Designed for a 6th grader: no public interaction on the site.</p>
+            <p>Designed to be kid-safe: no public interaction on the site.</p>
           </div>
         </div>
 
-        <div class="grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="two-col">
           <div class="card">
             <h3>What this site does not allow</h3>
             <p class="desc">
               There are <strong>no comments</strong>, <strong>no direct messages</strong>, <strong>no chat</strong>, and <strong>no public posting</strong>.
-              Visitors can only click an Email button that opens their own email app.
+              Visitors can only click a button that opens their own email app. We review messages in our inbox.
             </p>
-            <div class="meta">
+            <div class="meta" style="margin-top:10px;">
               <span class="pill accent">No comments</span>
               <span class="pill accent">No chat</span>
               <span class="pill accent">No accounts</span>
+              <span class="pill">Email-only requests</span>
             </div>
           </div>
 
           <div class="card" id="contact">
-            <h3>Email us</h3>
+            <h3>Email 3D Divas</h3>
             <p class="desc">
-              Use the button below to email us. We’ll review all messages and reply from our inbox.
+              Use the button below to send a general question or request. (No on-site forms.)
             </p>
             <div class="card-actions">
               <a class="btn" id="generalEmailBtn" href="#">
@@ -570,9 +612,13 @@
                   <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
                   <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Email 3D Divas
+                Email Us
               </a>
-              <span class="small">Opens your email app (no on-site form).</span>
+              <span class="small">Opens your email app (mailto link).</span>
+            </div>
+
+            <div class="note" style="margin-top:12px;">
+              If the Email button doesn’t open on someone’s device, they can copy the address from the page source or message you privately for the email address.
             </div>
           </div>
         </div>
@@ -582,21 +628,20 @@
 
   <footer>
     <div class="container">
-      <div class="footer-grid">
+      <div class="two-col">
         <div class="footer-card">
           <h4>About 3D Divas</h4>
           <p>
-            A simple family site to share printer options and collect requests by email.
-            Everything stays private in our inbox—nothing is posted publicly.
+            3D Divas is a family-friendly page for sharing 3D printed models. Requests are handled by email so nothing is posted publicly.
           </p>
           <div class="tiny">© <span id="year"></span> 3D Divas</div>
         </div>
 
         <div class="footer-card">
-          <h4>Tip</h4>
+          <h4>Owner Note</h4>
           <p>
-            If you later decide you want a custom domain, you can host this same file on GitHub Pages
-            (free) or a simple host — but the page works fine as-is in a preview or shared link.
+            Prices shown are “starting at” unless you specify otherwise. Size, color, and quantity can change the final cost.
+            We confirm everything by email before printing.
           </p>
         </div>
       </div>
@@ -604,68 +649,100 @@
   </footer>
 
   <script>
-    // =========================
-    // CONFIG — CHANGE THIS ONLY
-    // =========================
-    const SITE_EMAIL = "YOUR_EMAIL_HERE"; // <-- put your email here (example: stewart@example.com)
+    // ============================================================
+    // 1) CHANGE THIS EMAIL (PARENT INBOX) THEN SAVE THE FILE
+    // ============================================================
+    const SITE_EMAIL = "YOUR_EMAIL_HERE"; // example: stewart@example.com
 
-    // =========================
-    // DATA — EDIT THESE PRINTERS
-    // =========================
-    const printers = [
+    // ============================================================
+    // 2) EDIT YOUR MODEL LIST HERE
+    //    - Add / remove items
+    //    - Update price, sizes, colors, category, description
+    // ============================================================
+    const models = [
       {
-        name: "Starter FDM Printer",
-        type: "FDM",
-        level: "Beginner",
-        highlights: ["Easy setup", "Great for PLA", "Everyday family projects"],
-        desc: "A friendly filament printer option for learning the basics and printing common models.",
-        buildVolume: "220×220×250 mm"
+        name: "Flexi Dragon",
+        category: "Fantasy",
+        price: 12,
+        featured: true,
+        sizes: ["Small", "Medium", "Large"],
+        colors: ["Purple", "Blue", "Pink", "Black", "White"],
+        turnaround: "2–5 days",
+        desc: "A fun articulated dragon that wiggles and poses great on a desk."
+          image: "images/flexi-dragon.png"
       },
       {
-        name: "Fast FDM Printer",
-        type: "FDM",
-        level: "Intermediate",
-        highlights: ["High speed", "Auto leveling", "Great for bigger batches"],
-        desc: "A faster filament printer for people who want quicker prints without losing quality.",
-        buildVolume: "256×256×256 mm"
+        name: "Cute Axolotl",
+        category: "Animals",
+        price: 10,
+        featured: true,
+        sizes: ["Small", "Medium"],
+        colors: ["Pink", "Mint", "White", "Rainbow (ask)"],
+        turnaround: "2–5 days",
+        desc: "A sweet little axolotl — great gift or shelf buddy."
+          image: "images/axolotl.png"
       },
       {
-        name: "Enclosed FDM Printer",
-        type: "FDM",
-        level: "Intermediate",
-        highlights: ["Enclosure", "More material options", "Cleaner prints"],
-        desc: "An enclosed filament printer for more consistent results and better temperature control.",
-        buildVolume: "300×300×300 mm"
+        name: "Fidget Spiral",
+        category: "Fidgets",
+        price: 6,
+        featured: true,
+        sizes: ["One size"],
+        colors: ["Red", "Blue", "Green", "Purple", "Two-tone (ask)"],
+        turnaround: "1–3 days",
+        desc: "A satisfying fidget that spins and clicks gently."
+          image: "images/fidget_spiral.png"
       },
       {
-        name: "Beginner Resin Printer",
-        type: "Resin",
-        level: "Beginner",
-        highlights: ["High detail", "Smooth finish", "Miniatures & small parts"],
-        desc: "A resin option for super fine details and clean surfaces (requires resin handling).",
-        buildVolume: "Approx. 130×80×160 mm"
+        name: "Heart Keychain",
+        category: "Keychains",
+        price: 5,
+        featured: false,
+        sizes: ["Small"],
+        colors: ["Pink", "Red", "White", "Black"],
+        turnaround: "1–3 days",
+        desc: "A simple heart keychain. Add initials by request."
+          image: "images/keychain_heart.png"
       },
       {
-        name: "Pro Resin Printer",
-        type: "Resin",
-        level: "Pro",
-        highlights: ["Ultra detail", "Larger resin volume", "Professional results"],
-        desc: "A higher-end resin printer for advanced detail work and higher output needs.",
-        buildVolume: "Approx. 220×125×230 mm"
+        name: "Desk Name Plate",
+        category: "Personalized",
+        price: 15,
+        featured: false,
+        sizes: ["Short", "Standard", "Long"],
+        colors: ["White", "Black", "Blue", "Two-tone (ask)"],
+        turnaround: "3–7 days",
+        desc: "A custom name plate for desks. Email the name + color choice."
+          image: "images/nameplate.png"
       },
       {
-        name: "Pro FDM Printer",
-        type: "FDM",
-        level: "Pro",
-        highlights: ["Reliable", "Great for PETG/ABS", "Workshop ready"],
-        desc: "A professional filament printer option for serious projects and consistent output.",
-        buildVolume: "350×350×350 mm"
-      }
+        name: "Mini Planter",
+        category: "Home & Decor",
+        price: 9,
+        featured: false,
+        sizes: ["Small", "Medium"],
+        colors: ["White", "Gray", "Blue", "Pink"],
+        turnaround: "2–5 days",
+        desc: "A tiny planter for succulents or desk decor (liner recommended)."
+          image: "images/mini_planter.png"
+      },
+      {
+        name: "Snowflake Ornament",
+        category: "Seasonal",
+        price: 7,
+        featured: false,
+        sizes: ["Small", "Medium"],
+        colors: ["White", "Silver (ask)", "Blue"],
+        turnaround: "2–5 days",
+        desc: "Seasonal ornament — lightweight and easy to hang."
+          image: "images/ornament_snowflake.png"
+      },
+      
     ];
 
-    // =========================
-    // UTIL
-    // =========================
+    // ============================================================
+    // Utilities
+    // ============================================================
     function escapeHtml(str){
       return String(str)
         .replaceAll("&", "&amp;")
@@ -675,22 +752,35 @@
         .replaceAll("'", "&#039;");
     }
 
-    function mailtoForModel(modelName){
-      const subject = `3D Divas - Printer Request: ${modelName}`;
+    function toUSD(num){
+      try{
+        return new Intl.NumberFormat("en-US", {style:"currency", currency:"USD"}).format(num);
+      } catch {
+        return "$" + Number(num).toFixed(2);
+      }
+    }
+
+    function buildMailtoForModel(model, chosenSize, chosenColor){
+      const subject = `3D Divas - Print Request: ${model.name}`;
       const body =
 `Hi Stewart,
 
-I’m interested in the printer model: ${modelName}
+I would like to request this 3D print:
 
-What I want to print:
-- 
+Model: ${model.name}
+Category: ${model.category}
+Size: ${chosenSize || "Not selected"}
+Color: ${chosenColor || "Not selected"}
+Quantity: 1
 
-Questions:
-- 
+Notes / personalization (optional):
+-
+
+Delivery (pickup or shipping):
+-
 
 Thanks!`;
-      const href = `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      return href;
+      return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
     function generalMailto(){
@@ -701,106 +791,180 @@ Thanks!`;
 I have a question about 3D Divas.
 
 My question:
-- 
+-
 
 Thanks!`;
       return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
-    // =========================
-    // RENDER
-    // =========================
-    const grid = document.getElementById("printerGrid");
+    // ============================================================
+    // Render
+    // ============================================================
+    const grid = document.getElementById("modelGrid");
     const resultsCount = document.getElementById("resultsCount");
     const searchInput = document.getElementById("searchInput");
-    const typeFilter = document.getElementById("typeFilter");
-    const levelFilter = document.getElementById("levelFilter");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortSelect = document.getElementById("sortSelect");
     const generalEmailBtn = document.getElementById("generalEmailBtn");
 
+    // Set general email button
     generalEmailBtn.setAttribute("href", generalMailto());
 
-    function matches(printer, q, type, level){
+    // Build category list
+    const categories = Array.from(new Set(models.map(m => m.category))).sort((a,b)=>a.localeCompare(b));
+    for(const c of categories){
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      categoryFilter.appendChild(opt);
+    }
+
+    function matches(model, q, category){
       const haystack = [
-        printer.name,
-        printer.type,
-        printer.level,
-        printer.desc,
-        printer.buildVolume,
-        ...(printer.highlights || [])
+        model.name,
+        model.category,
+        model.desc,
+        model.turnaround,
+        ...(model.sizes || []),
+        ...(model.colors || [])
       ].join(" ").toLowerCase();
 
       const queryOk = !q || haystack.includes(q);
-      const typeOk = (type === "all") || (printer.type === type);
-      const levelOk = (level === "all") || (printer.level === level);
-      return queryOk && typeOk && levelOk;
+      const categoryOk = (category === "all") || (model.category === category);
+      return queryOk && categoryOk;
+    }
+
+    function sortModels(arr, mode){
+      const copy = [...arr];
+      if(mode === "priceLow") copy.sort((a,b)=>a.price - b.price);
+      else if(mode === "priceHigh") copy.sort((a,b)=>b.price - a.price);
+      else if(mode === "nameAZ") copy.sort((a,b)=>a.name.localeCompare(b.name));
+      else {
+        // Featured first, then name
+        copy.sort((a,b)=>{
+          const af = a.featured ? 1 : 0;
+          const bf = b.featured ? 1 : 0;
+          if(bf !== af) return bf - af;
+          return a.name.localeCompare(b.name);
+        });
+      }
+      return copy;
     }
 
     function render(){
       const q = (searchInput.value || "").trim().toLowerCase();
-      const type = typeFilter.value;
-      const level = levelFilter.value;
+      const category = categoryFilter.value;
+      const sortMode = sortSelect.value;
 
-      const filtered = printers.filter(p => matches(p, q, type, level));
+      const filtered = models.filter(m => matches(m, q, category));
+      const sorted = sortModels(filtered, sortMode);
 
-      resultsCount.textContent = `${filtered.length} option${filtered.length === 1 ? "" : "s"} shown`;
+      resultsCount.textContent = `${sorted.length} model${sorted.length === 1 ? "" : "s"} shown`;
 
-      grid.innerHTML = filtered.map(p => {
-        const safeName = escapeHtml(p.name);
-        const safeDesc = escapeHtml(p.desc);
-        const safeVol = escapeHtml(p.buildVolume);
+      if(sorted.length === 0){
+        grid.innerHTML = `
+          <div class="card" style="grid-column:1 / -1;">
+            <h3>No matches</h3>
+            <p class="desc">Try a different search term or choose “All categories”.</p>
+          </div>
+        `;
+        return;
+      }
 
-        const highlights = (p.highlights || []).slice(0,3).map(h =>
-          `<span class="pill">${escapeHtml(h)}</span>`
-        ).join("");
+      grid.innerHTML = sorted.map((m, idx) => {
+        const safeName = escapeHtml(m.name);
+        const safeCat = escapeHtml(m.category);
+        const safeDesc = escapeHtml(m.desc);
+        const safeTurn = escapeHtml(m.turnaround || "Ask");
+
+        const priceText = `From ${toUSD(m.price)}`;
+
+        const sizeOptions = (m.sizes || ["One size"]).map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+        const colorOptions = (m.colors || ["Ask"]).map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+
+        // unique ids for selects
+        const sizeId = `size_${idx}`;
+        const colorId = `color_${idx}`;
+        const emailId = `email_${idx}`;
 
         return `
           <article class="card">
-            <div class="thumb" aria-hidden="true">3D Divas</div>
+            <div class="thumb">
+  <img
+    src="${escapeHtml(m.image || '')}"
+    alt="${safeName} photo"
+    loading="lazy"
+    onerror="this.style.display='none'; this.parentElement.innerHTML='<span>3D Divas</span>';"
+    style="width:100%;height:100%;object-fit:cover;border-radius:14px;"
+  />
+</div>
 
-            <div>
-              <h3>${safeName}</h3>
-              <div class="meta" style="margin-top:8px;">
-                <span class="pill">${escapeHtml(p.type)}</span>
-                <span class="pill">${escapeHtml(p.level)}</span>
-                <span class="pill accent">Build: ${safeVol}</span>
+            <div class="title-row">
+              <div>
+                <h3>${safeName}</h3>
+                <div class="meta" style="margin-top:8px;">
+                  <span class="pill">${safeCat}</span>
+                  ${m.featured ? `<span class="pill accent">Popular</span>` : ``}
+                  <span class="pill">Turnaround: ${safeTurn}</span>
+                </div>
               </div>
+              <div class="price">${escapeHtml(priceText)}</div>
             </div>
 
             <p class="desc">${safeDesc}</p>
 
-            <div class="meta">${highlights}</div>
+            <div class="meta" style="gap:10px; align-items:center;">
+              <label class="small" for="${sizeId}" style="min-width:56px;">Size</label>
+              <select class="select" id="${sizeId}" aria-label="Choose size for ${safeName}" style="flex:1;">
+                ${sizeOptions}
+              </select>
+            </div>
+
+            <div class="meta" style="gap:10px; align-items:center;">
+              <label class="small" for="${colorId}" style="min-width:56px;">Color</label>
+              <select class="select" id="${colorId}" aria-label="Choose color for ${safeName}" style="flex:1;">
+                ${colorOptions}
+              </select>
+            </div>
 
             <div class="card-actions">
-              <a class="btn" href="${mailtoForModel(p.name)}">
+              <a class="btn" id="${emailId}" href="#">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
                   <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Email about this model
+                Request This Print
               </a>
-              <span class="small">Prefills model name</span>
+              <span class="small">Opens your email app with details filled in.</span>
             </div>
           </article>
         `;
       }).join("");
 
-      if(filtered.length === 0){
-        grid.innerHTML = `
-          <div class="card" style="grid-column: 1 / -1;">
-            <h3>No matches</h3>
-            <p class="desc">Try a different search term or clear the filters.</p>
-          </div>
-        `;
-      }
+      // Wire up email links after render (so we include chosen size/color)
+      sorted.forEach((m, idx) => {
+        const sizeEl = document.getElementById(`size_${idx}`);
+        const colorEl = document.getElementById(`color_${idx}`);
+        const emailEl = document.getElementById(`email_${idx}`);
+
+        function updateMailto(){
+          const chosenSize = sizeEl ? sizeEl.value : "";
+          const chosenColor = colorEl ? colorEl.value : "";
+          emailEl.setAttribute("href", buildMailtoForModel(m, chosenSize, chosenColor));
+        }
+
+        if(sizeEl) sizeEl.addEventListener("change", updateMailto);
+        if(colorEl) colorEl.addEventListener("change", updateMailto);
+        updateMailto();
+      });
     }
 
     searchInput.addEventListener("input", render);
-    typeFilter.addEventListener("change", render);
-    levelFilter.addEventListener("change", render);
+    categoryFilter.addEventListener("change", render);
+    sortSelect.addEventListener("change", render);
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Initial render
     render();
   </script>
 </body>
