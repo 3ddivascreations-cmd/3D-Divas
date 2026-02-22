@@ -16,11 +16,12 @@
       --bg: var(--honeydew);
       --text: #111827;
       --muted: #475569;
-      --border: rgba(56,54,154,.18);
 
       --primary: var(--egyptian-blue);
       --primary-2: var(--wisteria-blue);
+      --accent: var(--light-coral);
 
+      --border: rgba(56,54,154,.18);
       --shadow: 0 12px 34px rgba(0,0,0,.08);
       --radius: 18px;
       --radius-lg: 26px;
@@ -38,9 +39,12 @@
         radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
         var(--bg);
     }
-    .container{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+    .container{
+      width:min(1120px, calc(100% - 40px));
+      margin:0 auto;
+    }
 
-    /* Banner */
+    /* ========= Banner (no crop for 1200x182) ========= */
     .banner-wrap{
       border-bottom: 1px solid rgba(56,54,154,.12);
       background: rgba(221,248,232,.6);
@@ -49,15 +53,14 @@
       z-index: 50;
       backdrop-filter: blur(10px);
     }
+    .banner-hotspot{ position: relative; }
     .banner{
-  width: 100%;
-  height: auto;
-  display: block;
-}
-    /* Hotspot over the left logo area (adjust width if needed) */
-    .banner-hotspot{
-      position: relative;
+      width:100%;
+      height:auto;        /* keeps full image visible */
+      display:block;
     }
+
+    /* Hotspot over left logo area of banner */
     .logo-hotspot{
       position:absolute;
       top:0;
@@ -67,14 +70,15 @@
       display:block;
       text-indent:-9999px;
       overflow:hidden;
+      cursor:pointer;
     }
     @media (max-width: 760px){
       .logo-hotspot{ width: 40%; }
     }
 
-    /* Hero section */
+    /* ========= Hero layout ========= */
     .hero{
-      padding: 26px 0 40px;
+      padding: 26px 0 14px;
     }
     .hero-grid{
       display:grid;
@@ -82,7 +86,7 @@
       gap: 18px;
       align-items: stretch;
     }
-    @media (max-width: 900px){
+    @media (max-width: 950px){
       .hero-grid{ grid-template-columns: 1fr; }
     }
 
@@ -93,10 +97,12 @@
       box-shadow: var(--shadow);
       padding: 22px;
     }
+
     h1{
       margin:0 0 10px;
       font-size: clamp(26px, 3vw, 40px);
       letter-spacing:-.4px;
+      line-height: 1.08;
       color: var(--primary);
     }
     p{
@@ -106,12 +112,13 @@
       font-size: 15px;
     }
 
+    /* Buttons */
     .btn-row{
       display:flex;
       gap: 12px;
       flex-wrap:wrap;
-      margin-top: 18px;
       align-items:center;
+      margin-top: 16px;
     }
     .btn{
       background: var(--primary);
@@ -127,8 +134,10 @@
       gap:10px;
       cursor:pointer;
       box-shadow: var(--shadow);
+      user-select:none;
     }
     .btn:hover{ filter: brightness(1.05); }
+    .btn:active{ transform: translateY(1px); }
     .btn:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
 
     .btn.secondary{
@@ -150,43 +159,99 @@
       line-height: 1.5;
     }
 
-    /* Right side illustration area (optional) */
+    /* ========= Right hero art panel (girl + speech bubble) ========= */
     .right-visual{
-      background: rgba(255,255,255,.65);
-      border: 1px solid rgba(56,54,154,.12);
       border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(56,54,154,.12);
       box-shadow: var(--shadow);
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height: 260px;
-      position:relative;
+      background: rgba(255,255,255,.55);
+      min-height: 360px;
     }
+
     .right-visual img{
       width:100%;
       height:100%;
-      object-fit: cover;
+      object-fit: cover;    /* fill nicely like your mock */
       display:block;
     }
-    .right-visual .placeholder{
-      padding: 20px;
-      color: rgba(56,54,154,.75);
+
+    /* SHOP NOW button placed over hero image */
+    .shop-cta{
+      position:absolute;
+      left: 56%;
+      top: 54%;
+      transform: translate(-50%, -50%);
+      background: var(--primary);
+      color:#fff;
+      text-decoration:none;
       font-weight: 900;
-      text-transform: uppercase;
+      padding: 16px 46px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.25);
       letter-spacing: .8px;
-      text-align:center;
+      text-transform: uppercase;
+    }
+    .shop-cta:hover{ filter: brightness(1.05); }
+    .shop-cta:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
+
+    /* Small screens: keep it usable */
+    @media (max-width: 950px){
+      .right-visual{ min-height: 320px; }
+      .shop-cta{ left: 50%; top: 62%; }
+    }
+
+    /* ========= Bottom boxes + purple bar ========= */
+    .home-bottom{
+      padding: 14px 0 18px;
+    }
+    .bottom-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){
+      .bottom-grid{ grid-template-columns: 1fr; }
+    }
+    .bottom-card{
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+    }
+    .bottom-card h3{
+      margin:0 0 8px;
+      color: var(--primary);
+      letter-spacing:-.2px;
+      font-size: 15px;
+    }
+    .bottom-card p{
+      margin:0 0 8px;
+      color: var(--muted);
+      line-height:1.6;
+      font-size:14px;
+    }
+    .tiny{
+      font-size:12px;
+      color: rgba(71,85,105,.9);
+      margin-top: 10px;
+    }
+    .purple-bar{
+      height: 56px;
+      background: var(--primary);
     }
   </style>
 </head>
 
 <body>
-  <!-- Banner (appears on both pages) -->
+  <!-- Banner -->
   <div class="banner-wrap">
     <div class="banner-hotspot">
-      <!-- Put your banner image here -->
       <img class="banner" src="images/banner.png" alt="3D Divas banner" />
-      <!-- Logo hotspot: takes you back to Page 1 -->
+      <!-- Hotspot: clicking the logo area returns home -->
       <a class="logo-hotspot" href="index.html" aria-label="Go to 3D Divas home">Home</a>
     </div>
   </div>
@@ -194,20 +259,21 @@
   <main class="hero">
     <div class="container">
       <div class="hero-grid">
-        <section class="card">
+        <!-- Left text card -->
+        <section class="card" aria-label="Welcome to 3D Divas">
           <h1>Cute, fun, and custom 3D printed creations</h1>
 
           <p>Welcome to <strong>3D Divas</strong>! We’re three 6th grade girls learning entrepreneurship through 3D printing.</p>
 
           <p>
-            This project helps us practice creativity, problem-solving, and responsibility—planning, communicating, pricing,
-            and delivering a finished product. If you have any questions, click <strong>Email Us</strong>.
+            This project helps us practice creativity, problem-solving, and responsibility—planning, communicating,
+            pricing, and delivering a finished product. If you have any questions, click <strong>Email Us</strong>.
             Messages go directly to our <strong>parent-managed inbox</strong>.
           </p>
 
           <p>
-            Click <strong>Shop Now</strong> to browse our models. When you find something you’d like printed, click
-            <strong>Request This Print</strong> to open an email with the model name already filled in.
+            To browse our models, click <strong>Shop Now</strong>. When you find something you’d like printed, click
+            <strong>Request This Print</strong>. It opens an email with the model name already filled in.
           </p>
 
           <div class="btn-row">
@@ -217,10 +283,6 @@
                aria-label="Email 3D Divas">
               ✉️ Email Us
             </a>
-
-            <a class="btn" href="shop.html" aria-label="Go to the shop page">
-              🛒 Shop Now
-            </a>
           </div>
 
           <div class="note">
@@ -228,16 +290,37 @@
           </div>
         </section>
 
-        <!-- Optional right-side image area for page 1 -->
-        <aside class="right-visual" aria-label="3D Divas fun graphic">
-          <!-- If you want a home-page right image, place it here -->
-          <!-- <img src="images/home-side.png" alt="3D Divas character art" /> -->
-          <div class="placeholder">Optional image area</div>
+        <!-- Right hero image (girl + speech bubble) -->
+        <aside class="right-visual hero-art" aria-label="3D Divas hero art">
+          <img src="images/home-hero.png" alt="3D Divas hero image" />
+          <a class="shop-cta" href="shop.html" aria-label="Shop Now">SHOP NOW</a>
         </aside>
       </div>
     </div>
+
+    <!-- Bottom info cards -->
+    <section class="home-bottom">
+      <div class="container">
+        <div class="bottom-grid">
+          <div class="bottom-card">
+            <h3>About 3D Divas</h3>
+            <p>3D Divas is a family-friendly page for sharing 3D printed models. Requests are handled by email so nothing is posted publicly.</p>
+            <p class="tiny">© <span id="year"></span> 3D Divas</p>
+          </div>
+
+          <div class="bottom-card">
+            <h3>Owner Note</h3>
+            <p>Prices shown are “starting at.” Size, color, and quantity can change the final cost. We confirm everything by email before printing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <div class="purple-bar" aria-hidden="true"></div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
-
