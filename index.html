@@ -1,233 +1,275 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>3D Divas</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Divas — Home</title>
 
-<style>
-:root{
-  --honeydew:#ddf8e8;
-  --egyptian-blue:#38369a;
-  --light-coral:#e0777d;
-  --wisteria-blue:#7b8cde;
-  --wisteria-blue-2:#81a4cd;
+  <style>
+    :root{
+      --honeydew:#ddf8e8;
+      --egyptian-blue:#38369a;
+      --light-coral:#e0777d;
+      --wisteria-blue:#7b8cde;
+      --wisteria-blue-2:#81a4cd;
 
-  --primary: var(--egyptian-blue);
-  --border: rgba(56,54,154,.18);
-  --shadow: 0 14px 34px rgba(0,0,0,.08);
-  --radius: 22px;
-}
+      --primary: var(--egyptian-blue);
+      --border: rgba(56,54,154,.18);
+      --shadow: 0 14px 34px rgba(0,0,0,.08);
+      --radius: 22px;
+      --focus: 0 0 0 4px rgba(123,140,222,.25);
+      --muted: #475569;
+      --text: #111827;
+    }
 
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:linear-gradient(180deg,#e6efe8,#d9e6e0);
-  color:#1f2937;
-}
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(123,140,222,.22), transparent 35%),
+        radial-gradient(circle at 92% 10%, rgba(224,119,125,.20), transparent 35%),
+        radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
+        var(--honeydew);
+    }
 
-.container{
-  width:min(1100px,calc(100% - 40px));
-  margin:0 auto;
-}
+    .container{
+      width:min(1120px, calc(100% - 40px));
+      margin:0 auto;
+    }
 
-/* ===== Banner ===== */
-.banner-wrap{
-  border-bottom:1px solid rgba(56,54,154,.15);
-  background:#e8f5ee;
-}
-.banner-hotspot{position:relative;}
-.banner{
-  width:100%;
-  height:auto; /* no cropping for 1200x182 */
-  display:block;
-}
-.logo-hotspot{
-  position:absolute;
-  top:0;
-  left:0;
-  width:28%;
-  height:100%;
-  display:block;
-  text-indent:-9999px;
-}
+    /* ===== Banner ===== */
+    .banner-wrap{
+      border-bottom: 1px solid rgba(56,54,154,.15);
+      background: rgba(221,248,232,.65);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+    .banner-hotspot{ position:relative; }
+    .banner{
+      width:100%;
+      height:auto; /* no cropping */
+      display:block;
+    }
+    .logo-hotspot{
+      position:absolute;
+      top:0;
+      left:0;
+      width:28%;
+      height:100%;
+      display:block;
+      text-indent:-9999px;
+      overflow:hidden;
+      cursor:pointer;
+    }
+    @media (max-width:760px){
+      .logo-hotspot{ width:40%; }
+    }
 
-/* ===== Hero Section ===== */
-.hero{
-  padding:30px 0 10px;
-}
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:20px;
-}
-@media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr;}
-}
+    /* ===== Full-width hero with background image ===== */
+    .full-hero{
+      position: relative;
+      width: 100%;
+      min-height: 560px;
 
-.card{
-  background:rgba(255,255,255,.9);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:24px;
-}
+      /* YOUR HERO IMAGE */
+      background-image: url("images/home-hero.png");
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: contain;
 
-h1{
-  margin:0 0 14px;
-  font-size:clamp(26px,3vw,40px);
-  color:var(--primary);
-}
+      /* subtle page-friendly background behind image */
+      background-color: rgba(230,239,232,.65);
 
-p{
-  margin:0 0 14px;
-  line-height:1.6;
-  font-size:15px;
-  color:#475569;
-}
+      padding: 46px 0 58px;
+      border-bottom: 1px solid rgba(56,54,154,.10);
+    }
 
-/* Email button */
-.btn{
-  display:inline-block;
-  padding:12px 22px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:700;
-  background:#fff;
-  color:var(--primary);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-}
+    /* Layout inside hero: card on left, button floating on hero */
+    .hero-inner{
+      position: relative;
+      min-height: 480px;
+      display:flex;
+      align-items: flex-start;
+      padding-top: 18px;
+    }
 
-/* ===== Right Background Image Panel ===== */
-.right-visual{
-  position:relative;
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:var(--shadow);
+    .card{
+      background: rgba(255,255,255,.90);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      max-width: 560px;
+      z-index: 2;
+    }
 
-  background-image:url("images/home-hero.png");
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:contain;
+    h1{
+      margin:0 0 14px;
+      font-size: clamp(26px, 3vw, 40px);
+      color: var(--primary);
+      letter-spacing: -.4px;
+      line-height: 1.08;
+    }
+    p{
+      margin:0 0 14px;
+      line-height:1.6;
+      font-size:15px;
+      color: var(--muted);
+    }
 
-  min-height:430px;
-  background-color:#e5ece8;
-}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 20px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:900;
+      background: rgba(255,255,255,.92);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      user-select:none;
+    }
+    .btn:hover{ filter: brightness(1.03); }
+    .btn:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
 
-/* Shop Now button positioned over image */
-.shop-cta{
-  position:absolute;
-  left:55%;
-  top:55%;
-  transform:translate(-50%,-50%);
-  background:var(--primary);
-  color:#fff;
-  text-decoration:none;
-  padding:18px 50px;
-  border-radius:999px;
-  font-weight:900;
-  letter-spacing:.5px;
-  box-shadow:var(--shadow);
-}
+    /* SHOP button floating over the hero background */
+    .shop-cta{
+      position:absolute;
+      left: 66%;
+      top: 58%;
+      transform: translate(-50%, -50%);
+      background: var(--primary);
+      color:#fff;
+      text-decoration:none;
+      padding: 18px 54px;
+      border-radius: 999px;
+      font-weight: 900;
+      letter-spacing: .6px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.25);
+      text-transform: uppercase;
+      z-index: 3;
+    }
+    .shop-cta:hover{ filter: brightness(1.05); }
+    .shop-cta:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
 
-@media(max-width:900px){
-  .right-visual{
-    min-height:350px;
-  }
-  .shop-cta{
-    left:50%;
-    top:65%;
-  }
-}
+    /* ===== Bottom info boxes ===== */
+    .home-bottom{
+      padding: 18px 0 22px;
+    }
+    .bottom-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 900px){
+      .bottom-grid{ grid-template-columns: 1fr; }
+    }
+    .bottom-card{
+      background: rgba(255,255,255,.90);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+    }
+    .bottom-card h3{
+      margin:0 0 10px;
+      color: var(--primary);
+      font-size: 15px;
+      letter-spacing: -.2px;
+    }
+    .bottom-card p{
+      margin:0;
+      font-size:14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .tiny{
+      font-size: 12px;
+      margin-top: 10px;
+      color: rgba(71,85,105,.9);
+    }
 
-/* ===== Bottom Info Boxes ===== */
-.home-bottom{
-  padding:20px 0;
-}
-.bottom-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-@media(max-width:900px){
-  .bottom-grid{grid-template-columns:1fr;}
-}
+    .purple-bar{
+      height: 60px;
+      background: var(--primary);
+    }
 
-.bottom-card{
-  background:rgba(255,255,255,.9);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:16px;
-  box-shadow:var(--shadow);
-}
+    /* ===== Mobile adjustments ===== */
+    @media (max-width: 900px){
+      .full-hero{
+        background-position: center bottom;
+        background-size: contain;
+        min-height: 740px;
+        padding: 24px 0 28px;
+      }
 
-.bottom-card h3{
-  margin:0 0 10px;
-  color:var(--primary);
-  font-size:15px;
-}
+      .hero-inner{
+        flex-direction: column;
+        min-height: unset;
+        gap: 14px;
+      }
 
-.bottom-card p{
-  margin:0;
-  font-size:14px;
-  color:#475569;
-}
-
-.tiny{
-  font-size:12px;
-  margin-top:8px;
-}
-
-/* Purple bottom bar */
-.purple-bar{
-  height:60px;
-  background:var(--primary);
-}
-</style>
+      /* Put shop button below the card on mobile */
+      .shop-cta{
+        position: static;
+        transform: none;
+        display: inline-flex;
+        align-self: flex-start;
+        margin-top: 8px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- Banner -->
-<div class="banner-wrap">
-  <div class="banner-hotspot">
-    <img class="banner" src="images/banner.png" alt="3D Divas banner">
-    <a class="logo-hotspot" href="index.html">Home</a>
+  <!-- Banner -->
+  <div class="banner-wrap">
+    <div class="banner-hotspot">
+      <img class="banner" src="images/banner.png" alt="3D Divas banner" />
+      <a class="logo-hotspot" href="index.html" aria-label="Go to home">Home</a>
+    </div>
   </div>
-</div>
 
-<main class="hero">
-  <div class="container">
-    <div class="hero-grid">
+  <!-- Full-width hero -->
+  <section class="full-hero">
+    <div class="container hero-inner">
 
-      <!-- Left Text Card -->
-      <section class="card">
+      <!-- Left card -->
+      <div class="card">
         <h1>Cute, fun, and custom 3D printed creations</h1>
 
         <p>Welcome to <strong>3D Divas</strong>! We’re three 6th grade girls learning entrepreneurship through 3D printing.</p>
 
-        <p>This project helps us practice creativity, problem-solving, and responsibility—planning, communicating, pricing, and delivering a finished product.</p>
+        <p>
+          This project helps us practice creativity, problem-solving, and responsibility—planning, communicating, pricing,
+          and delivering a finished product.
+        </p>
 
-        <p>Have questions? Click Email Us. Messages go directly to our parent-managed inbox.</p>
+        <p>
+          Have questions? Click Email Us. Messages go directly to our parent-managed inbox.
+        </p>
 
-        <!-- CHANGE EMAIL BELOW -->
-        <a class="btn"
-           href="mailto:YOUR_EMAIL_HERE?subject=3D%20Divas%20Question">
-           ✉️ Email Us
+        <!-- CHANGE THIS EMAIL -->
+        <a class="btn" href="mailto:YOUR_EMAIL_HERE?subject=3D%20Divas%20Question" aria-label="Email us">
+          ✉️ Email Us
         </a>
-      </section>
+      </div>
 
-      <!-- Right Background Panel -->
-      <aside class="right-visual">
-        <a class="shop-cta" href="shop.html">SHOP NOW</a>
-      </aside>
+      <!-- Floating shop button -->
+      <a class="shop-cta" href="shop.html" aria-label="Shop now">SHOP NOW</a>
 
     </div>
-  </div>
+  </section>
 
-  <!-- Bottom Info Section -->
+  <!-- Bottom info boxes -->
   <section class="home-bottom">
     <div class="container">
       <div class="bottom-grid">
@@ -244,13 +286,11 @@ p{
       </div>
     </div>
   </section>
-</main>
 
-<div class="purple-bar"></div>
+  <div class="purple-bar" aria-hidden="true"></div>
 
-<script>
-document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
