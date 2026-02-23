@@ -128,24 +128,25 @@
     inset: 0;
     z-index:2;
     display:flex;
-    align-items: stretch;
-    padding: 26px 0 26px;
+    align-items:center;     /* center vertically */
+    padding: 0;             /* remove top/bottom padding so centering is real */
   }
-
   /* Grid overlay aligned to wrap */
   .hero{
     width:100%;
+    height:100%;                 /* fill strip height */
     display:grid;
     grid-template-columns: 1.05fr .95fr;
     gap: 22px;
-    align-items: stretch;
+    align-items:center;          /* center items vertically */
   }
   
   /* Limit main left text panel width */
+  /* Left panel: cap width + keep it nicely positioned as screen grows */
   .hero .panel:first-child{
     max-width: 770px;
     width: 100%;
-    justify-self: start;
+    justify-self: center;  /* center within its grid column */
   }
   
   @media (max-width: 980px){
