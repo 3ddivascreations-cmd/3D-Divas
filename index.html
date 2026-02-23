@@ -6,283 +6,301 @@
 <title>3D Divas — 3D Printed Creations</title>
 
 <style>
-  :root{
-    --purple:#3a2a7a;
-    --purple-dark:#2f2168;
+:root{
+  --purple:#3a2a7a;
+  --purple-dark:#2f2168;
 
-    --ink:#0f172a;
-    --muted:#334155;
+  --ink:#0f172a;
+  --muted:#334155;
 
-    /* Light purple panel like your screenshot */
-    --panel-bg: rgba(123, 140, 222, 0.18);
-    --panel-border: rgba(56, 54, 154, 0.35);
+  --panel-bg: rgba(123,140,222,.18);
+  --panel-border: rgba(56,54,154,.35);
 
-    --radius: 22px;
-    --shadow: 0 16px 40px rgba(15,23,42,.14);
+  --radius:22px;
+  --shadow:0 16px 40px rgba(15,23,42,.14);
 
-    --max: 1200px;
-  }
+  --max:1200px;
+}
 
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; }
-  body{
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--ink);
-    background: #dff6e9;
-  }
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:#dff6e9;
+}
 
-  .wrap{
-    width: min(var(--max), calc(100% - 32px));
-    margin: 0 auto;
-  }
+/* ===== Layout Containers ===== */
 
-  /* Stage overlay container: left-anchored so it doesn't “drift” on ultra-wide screens */
-  .stage-wrap{
-    width: min(var(--max), calc(100% - 32px));
-    margin-left: 16px;   /* fixed left gutter */
-    margin-right: auto;  /* keep it left anchored */
-  }
+.wrap{
+  width:min(var(--max),calc(100% - 32px));
+  margin:0 auto;
+}
 
-  /* ===== Purple bars ===== */
-  .topbar, .bottombar{
-    background: linear-gradient(180deg, var(--purple), var(--purple-dark));
-    color: #fff;
-  }
-  .nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap: 14px;
-    padding: 14px 0;
-    flex-wrap:wrap;
-  }
-  .brand{
-    text-decoration:none;
-    color:#fff;
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-    min-width: 180px;
-  }
-  .brand strong{ font-size:16px; line-height:1.1; }
-  .brand small{ font-size:12px; opacity:.9; line-height:1.1; }
+/* left-anchored stage container so panel doesn't drift */
+.stage-wrap{
+  width:min(var(--max),calc(100% - 32px));
+  margin-left:16px;
+  margin-right:auto;
+}
 
-  .links{
-    display:flex;
-    gap: 20px;
-    flex-wrap:wrap;
-    align-items:center;
-  }
-  .links a{
-    color:#fff;
-    text-decoration:none;
-    font-weight: 800;
-    font-size: 14px;
-    opacity: .95;
-  }
-  .links a:hover{ text-decoration: underline; }
+/* ===== Purple Bars ===== */
 
-  .foot{
-    padding: 14px 0;
-    text-align:center;
-    font-weight: 800;
-    font-size: 13px;
-    opacity: .95;
-  }
+.topbar,.bottombar{
+  background:linear-gradient(180deg,var(--purple),var(--purple-dark));
+  color:#fff;
+}
 
-  /* ===== Full-width banner ===== */
-  .banner{
-    width:100%;
-    border-bottom: 2px solid rgba(53,51,120,.35);
-    background: rgba(0,0,0,.06);
-  }
-  .banner picture, .banner img{
-    width:100%;
-    height:auto;
-    display:block;
-  }
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 0;
+  flex-wrap:wrap;
+}
 
-  /* ===== Stage strip (scales like banner: no cropping) ===== */
-  .stage{
-    position: relative;
-    width:100%;
-    border-bottom: 2px solid rgba(53,51,120,.22);
-  }
-  .stage picture, .stage img{
-    width:100%;
-    height:auto;   /* key: no crop */
-    display:block;
-  }
+.brand{
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
 
-  /* Soft overlay to help text readability */
-  .stage-overlay{
-    position:absolute;
-    inset:0;
-    z-index:1;
-    background:
-      radial-gradient(circle at 10% 20%, rgba(255,255,255,.16), transparent 45%),
-      linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-    pointer-events:none;
-  }
+.brand strong{font-size:16px;}
+.brand small{font-size:12px;opacity:.9;}
 
-  /* Overlay content: vertically centered within the strip image */
+.links{
+  display:flex;
+  gap:20px;
+}
+
+.links a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+}
+
+.links a:hover{ text-decoration:underline; }
+
+.foot{
+  padding:14px 0;
+  text-align:center;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* ===== Banner ===== */
+
+.banner{
+  width:100%;
+  border-bottom:2px solid rgba(53,51,120,.35);
+}
+
+.banner picture,
+.banner img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ===== Stage Strip ===== */
+
+.stage{
+  position:relative;
+  width:100%;
+  border-bottom:2px solid rgba(53,51,120,.22);
+}
+
+.stage picture,
+.stage img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.stage-overlay{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,.16), transparent 45%),
+    linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+}
+
+.stage-content{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  align-items:center;
+}
+
+/* ===== Hero Grid ===== */
+
+.hero{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:22px;
+  align-items:center;
+}
+
+/* Left Panel */
+
+.panel{
+  background:var(--panel-bg);
+  border:1px solid var(--panel-border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:clamp(18px,2.4vw,28px);
+}
+
+.hero .panel:first-child{
+  max-width:770px;
+  width:100%;
+  justify-self:start;
+}
+
+.headline{
+  margin:0 0 12px;
+  font-size:clamp(28px,3.2vw,44px);
+  color:#2b2a72;
+}
+
+.copy{
+  margin:0 0 12px;
+  color:var(--muted);
+  line-height:1.6;
+  font-size:15px;
+}
+
+.copy-center{
+  text-align:center;
+  margin-top:16px;
+}
+
+/* ===== Buttons ===== */
+
+.btnrow{
+  margin-top:16px;
+  display:flex;
+  gap:12px;
+}
+
+.btnrow-center{ justify-content:center; }
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 18px;
+  border-radius:999px;
+  font-weight:950;
+  text-decoration:none;
+}
+
+.btn-email{
+  background:linear-gradient(180deg,#2f2b84,#2a256e);
+  color:#fff;
+  box-shadow:0 14px 30px rgba(15,23,42,.14);
+}
+
+.btn-email:hover{ filter:brightness(1.05); }
+
+/* ===== Shop Button Lane ===== */
+
+.shopLane{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start; /* stay near panel */
+}
+
+.shopFloat{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px 34px;
+  border-radius:999px;
+  font-size:18px;
+  font-weight:980;
+  background:linear-gradient(180deg,#2f2b84,#2a256e);
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 18px 38px rgba(15,23,42,.18);
+  min-width:220px;
+
+  /* Responsive distance from panel */
+  margin-left:clamp(16px,5vw,120px);
+}
+
+.shopFloat:hover{ filter:brightness(1.05); }
+
+/* ===== Responsive Adjustments ===== */
+
+@media (max-width:980px){
+
   .stage-content{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    display:flex;
-    align-items:center; /* vertical center */
-    padding: 0;
+    position:relative;
+    inset:auto;
+    padding:18px 0;
   }
 
-  /* Grid lane overlay */
+  .stage-wrap{
+    margin-left:auto;
+    margin-right:auto;
+  }
+
   .hero{
-    width:100%;
-    height:100%;
-    display:grid;
-    grid-template-columns: 1.05fr .95fr;
-    gap: 22px;
-    align-items:center; /* vertical center */
+    grid-template-columns:1fr;
+    height:auto;
   }
 
-  /* On tablet/mobile: stack and let content flow (no absolute overlay) */
-  @media (max-width: 980px){
-    .stage-content{
-      position:relative;
-      inset:auto;
-      padding: 18px 0 18px;
-      display:block;
-    }
-    .stage-wrap{
-      margin-left: auto;   /* center it on smaller screens */
-      margin-right: auto;
-    }
-    .hero{
-      height:auto;
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Panel */
-  .panel{
-    border: 1px solid var(--panel-border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: clamp(18px, 2.4vw, 28px);
-    background: var(--panel-bg);
-  }
-
-  /* Left panel width cap */
-  .hero .panel:first-child{
-    max-width: 770px;
-    width: 100%;
-    justify-self: start;
-  }
-
-  .headline{
-    margin: 0 0 12px;
-    font-size: clamp(28px, 3.2vw, 44px);
-    letter-spacing: -0.5px;
-    color: #2b2a72;
-  }
-  .copy{
-    margin: 0 0 12px;
-    color: var(--muted);
-    line-height: 1.6;
-    font-size: 15px;
-  }
-
-  /* Centered last sentence */
-  .copy-center{
-    text-align:center;
-    margin-top: 16px;
-  }
-
-  /* Button row */
-  .btnrow{
-    margin-top: 16px;
-    display:flex;
-    gap: 12px;
-    flex-wrap:wrap;
-  }
-  .btnrow-center{ justify-content:center; }
-
-  .btn{
-    display:inline-flex;
-    align-items:center;
+  .shopLane{
     justify-content:center;
-    gap: 10px;
-    padding: 12px 18px;
-    border-radius: 999px;
-    font-weight: 950;
-    text-decoration:none;
-    cursor:pointer;
-    user-select:none;
-    border: 1px solid rgba(53,51,120,.20);
+    margin-top:18px;
   }
 
-  /* Email button: purple with white text */
-  .btn-email{
-    background: linear-gradient(180deg, #2f2b84, #2a256e);
-    color:#fff;
-    border: 1px solid rgba(255,255,255,.18);
-    box-shadow: 0 14px 30px rgba(15,23,42,.14);
-  }
-  .btn-email:hover{ filter: brightness(1.05); }
-
-  /* SHOP NOW button (in grid column, not absolute) */
   .shopFloat{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+    margin-left:0;
+  }
+}
 
-    padding: 16px 34px;
-    border-radius: 999px;
-    font-size: 18px;
-    font-weight: 980;
-    letter-spacing: .6px;
-    background: linear-gradient(180deg, #2f2b84, #2a256e);
-    color:#fff;
-    text-decoration:none;
-    box-shadow: 0 18px 38px rgba(15,23,42,.18);
-    min-width: 220px;
+/* ===== Below Strip ===== */
 
-    justify-self:center;
-    align-self:center;
-  }
-  .shopFloat:hover{ filter: brightness(1.05); }
+.below{
+  padding:18px 0 28px;
+}
 
-  /* ===== Below strip ===== */
-  .below{
-    padding: 18px 0 28px;
-  }
-  .infoRow{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  @media (max-width: 980px){
-    .infoRow{ grid-template-columns: 1fr; }
-  }
+.infoRow{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
 
-  /* bottom info boxes should be white like your screenshot */
-  .panel-white{
-    background: rgba(255,255,255,.92);
-    border: 1px solid rgba(56, 54, 154, 0.22);
-  }
+@media (max-width:980px){
+  .infoRow{ grid-template-columns:1fr; }
+}
 
-  .subhead{
-    margin:0 0 8px;
-    font-size: 16px;
-    font-weight: 950;
-    color:#2b2a72;
-  }
-  .small{
-    margin:0;
-    color: var(--muted);
-    line-height: 1.6;
-    font-size: 14px;
-  }
+.panel-white{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(56,54,154,.22);
+}
+
+.subhead{
+  margin:0 0 8px;
+  font-size:16px;
+  font-weight:950;
+  color:#2b2a72;
+}
+
+.small{
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -292,12 +310,11 @@
 <div class="topbar">
   <div class="wrap">
     <div class="nav">
-      <a class="brand" href="index.html" aria-label="3D Divas Home">
+      <a class="brand" href="index.html">
         <strong>3D Divas</strong>
         <small>3D Printed Creations</small>
       </a>
-
-      <div class="links" aria-label="Top navigation">
+      <div class="links">
         <a href="shop.html">Shop</a>
         <a id="emailTop" href="#">Email</a>
         <a href="#about">About Us</a>
@@ -306,30 +323,29 @@
   </div>
 </div>
 
-<!-- FULL-WIDTH BANNER -->
-<div class="banner" aria-label="Banner">
+<!-- BANNER -->
+<div class="banner">
   <picture>
-    <source media="(max-width: 640px)" srcset="images/banner-mobile.png 1x, images/banner-mobile@2x.png 2x">
-    <source media="(max-width: 980px)" srcset="images/banner-tablet.png 1x, images/banner-tablet@2x.png 2x">
-    <img src="images/banner-desktop.png" srcset="images/banner-desktop.png 1x, images/banner-desktop@2x.png 2x" alt="3D Divas banner">
+    <source media="(max-width:640px)" srcset="images/banner-mobile.png">
+    <source media="(max-width:980px)" srcset="images/banner-tablet.png">
+    <img src="images/banner-desktop.png" alt="">
   </picture>
 </div>
 
 <!-- STAGE STRIP -->
-<section class="stage" aria-label="Homepage strip">
-  <!-- Strip image swaps by device and scales like the banner (no crop) -->
+<section class="stage">
   <picture>
-    <source media="(max-width: 640px)" srcset="images/homepage_bg-mobile.png">
-    <source media="(max-width: 980px)" srcset="images/homepage_bg-tablet.png">
+    <source media="(max-width:640px)" srcset="images/homepage_bg-mobile.png">
+    <source media="(max-width:980px)" srcset="images/homepage_bg-tablet.png">
     <img src="images/homepage_bg-desktop.png" alt="">
   </picture>
 
-  <div class="stage-overlay" aria-hidden="true"></div>
+  <div class="stage-overlay"></div>
 
-  <!-- Overlay content (left panel + centered Shop button in the right lane) -->
   <div class="stage-content">
     <div class="stage-wrap">
       <div class="hero">
+
         <!-- LEFT PANEL -->
         <div class="panel">
           <h1 class="headline">Cute, fun, and custom<br>3D printed creations</h1>
@@ -354,17 +370,18 @@
           </div>
         </div>
 
-        <!-- RIGHT LANE: Shop button stays centered between panel and girl -->
-        <div style="display:flex; align-items:center; justify-content:center;">
+        <!-- RIGHT LANE -->
+        <div class="shopLane">
           <a class="shopFloat" href="shop.html">SHOP NOW</a>
         </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <!-- BELOW STRIP -->
-<section class="below" aria-label="Info section">
+<section class="below">
   <div class="wrap">
     <div class="infoRow">
       <div class="panel panel-white" id="about">
@@ -384,7 +401,7 @@
   </div>
 </section>
 
-<!-- BOTTOM BAR -->
+<!-- FOOTER -->
 <div class="bottombar">
   <div class="wrap">
     <div class="foot">© <span id="year"></span> 3D Divas — Email Requests Only</div>
@@ -392,13 +409,11 @@
 </div>
 
 <script>
-  // ======= CONFIG =======
-  const SITE_EMAIL = "YOUR_EMAIL_HERE"; // <-- change this
+const SITE_EMAIL="YOUR_EMAIL_HERE";
 
-  function generalMailto(){
-    const subject = "3D Divas - Question";
-    const body =
-`Hi Stewart,
+function mailto(){
+  const subject="3D Divas - Question";
+  const body=`Hi Stewart,
 
 I have a question about 3D Divas.
 
@@ -406,12 +421,12 @@ My question:
 -
 
 Thanks!`;
-    return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
+  return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
-  document.getElementById("emailTop").href = generalMailto();
-  document.getElementById("emailMid").href = generalMailto();
-  document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("emailTop").href=mailto();
+document.getElementById("emailMid").href=mailto();
+document.getElementById("year").textContent=new Date().getFullYear();
 </script>
 
 </body>
