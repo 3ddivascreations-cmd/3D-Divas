@@ -31,15 +31,12 @@ body{
   background:#dff6e9;
 }
 
-/* ===== Layout Containers ===== */
-
 .wrap{
   width:min(var(--max),calc(100% - 32px));
   margin:0 auto;
 }
 
 /* ===== Top & Bottom Bars ===== */
-
 .topbar,.bottombar{
   background:linear-gradient(180deg,var(--purple),var(--purple-dark));
   color:#fff;
@@ -85,7 +82,6 @@ body{
 }
 
 /* ===== Banner ===== */
-
 .banner picture,
 .banner img{
   width:100%;
@@ -94,7 +90,6 @@ body{
 }
 
 /* ===== Stage Section ===== */
-
 .stage{
   position:relative;
   width:100%;
@@ -123,21 +118,19 @@ body{
   z-index:2;
   display:flex;
   align-items:center;
+  justify-content:center; /* default center on mobile/tablet */
 }
 
 /* ===== Hero Layout ===== */
-
-.hero{
-  margin:0 auto; /* default: center on small screens */
-}
-
-.panel{
+.hero .panel{
   background:var(--panel-bg);
   border:1px solid var(--panel-border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:clamp(18px,2.4vw,28px);
   backdrop-filter:blur(4px);
+  width:100%; /* responsive by default */
+  max-width:100%; 
 }
 
 .headline{
@@ -159,7 +152,6 @@ body{
 }
 
 /* ===== Buttons ===== */
-
 .btnrow{
   margin-top:16px;
   display:flex;
@@ -188,7 +180,6 @@ body{
 }
 
 /* ===== Below Section ===== */
-
 .below{
   padding:28px 0 40px;
 }
@@ -214,22 +205,10 @@ body{
 }
 
 /* ===== Responsive ===== */
-
-/* Tablet / Mobile */
 @media (max-width:980px){
-
   .stage-content{
     justify-content:center; /* center hero panel */
     padding:20px;
-  }
-
-  .hero{
-    margin:0 auto; /* center */
-  }
-
-  .hero .panel,
-  .infoRow .panel{
-    max-width:100%;
   }
 
   .infoRow{
@@ -237,17 +216,14 @@ body{
   }
 }
 
-/* Desktop: align hero panel to left edge of bottom left panel */
+/* ===== Desktop Alignment ===== */
 @media (min-width:981px){
-  .hero{
-    display:block;
-    width: fit-content;       /* shrink-wrap panel */
-    margin-left:16px;          /* align left edge with bottom left panel */
-    margin-right:auto;
+  .stage-content{
+    justify-content:flex-start; /* align hero panel to left */
   }
 
   .hero .panel{
-    width:520px;               /* fixed width matching bottom left panel */
+    width:520px; /* fixed width */
   }
 }
 </style>
@@ -289,29 +265,31 @@ body{
   <div class="stage-overlay"></div>
 
   <div class="stage-content">
-    <div class="hero">
-      <div class="panel">
-        <h1 class="headline">Cute, fun, and custom<br>3D printed creations</h1>
+    <div class="wrap">
+      <div class="hero">
+        <div class="panel">
+          <h1 class="headline">Cute, fun, and custom<br>3D printed creations</h1>
 
-        <p class="copy">
-          Welcome to 3D Divas! We’re three 6th grade girls learning entrepreneurship through 3D printing.
-        </p>
+          <p class="copy">
+            Welcome to 3D Divas! We’re three 6th grade girls learning entrepreneurship through 3D printing.
+          </p>
 
-        <p class="copy">
-          This project helps us practice creativity, problem-solving, and responsibility as we learn about technology and good business practices.
-        </p>
+          <p class="copy">
+            This project helps us practice creativity, problem-solving, and responsibility as we learn about technology and good business practices.
+          </p>
 
-        <p class="copy">
-          To browse our models, click Shop Now. When you find something you’d like printed, click Request This Print.
-        </p>
+          <p class="copy">
+            To browse our models, click Shop Now. When you find something you’d like printed, click Request This Print.
+          </p>
 
-        <p class="copy copy-center">
-          Questions? Click Email.
-        </p>
+          <p class="copy copy-center">
+            Questions? Click Email.
+          </p>
 
-        <div class="btnrow">
-          <a class="btn" id="emailMid" href="#">Email Us</a>
-          <a class="btn" href="shop.html">Shop Now</a>
+          <div class="btnrow">
+            <a class="btn" id="emailMid" href="#">Email Us</a>
+            <a class="btn" href="shop.html">Shop Now</a>
+          </div>
         </div>
       </div>
     </div>
