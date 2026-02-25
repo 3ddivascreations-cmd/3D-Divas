@@ -121,16 +121,16 @@ body{
   justify-content:center; /* default center on mobile/tablet */
 }
 
-/* ===== Hero Layout ===== */
-.hero .panel{
+/* ===== Hero & Bottom Panels Layout ===== */
+.panel{
   background:var(--panel-bg);
   border:1px solid var(--panel-border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:clamp(18px,2.4vw,28px);
   backdrop-filter:blur(4px);
-  width:100%; /* responsive by default */
-  max-width:100%; 
+  width:100%;
+  box-sizing:border-box;
 }
 
 .headline{
@@ -214,6 +214,10 @@ body{
   .infoRow{
     grid-template-columns:1fr;
   }
+
+  .panel{
+    max-width:100%;
+  }
 }
 
 /* ===== Desktop Alignment ===== */
@@ -223,7 +227,13 @@ body{
   }
 
   .hero .panel{
-    width:520px; /* fixed width */
+    width:520px; /* fixed width hero panel */
+  }
+
+  /* Ensure bottom panels match hero panel style and stay responsive */
+  .below .panel{
+    /* already using same .panel styling */
+    width:100%;
   }
 }
 </style>
