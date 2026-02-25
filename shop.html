@@ -17,7 +17,6 @@
   --text: #111827;
   --muted: #475569;
   --border: rgba(56,54,154,.18);
-
   --primary: var(--egyptian-blue);
   --shadow: 0 12px 34px rgba(0,0,0,.08);
   --radius: 18px;
@@ -42,37 +41,36 @@ body{
   margin:0 auto;
 }
 
-/* =========================
-   TOP PURPLE BANNER
-========================= */
+/* ======================
+   PURPLE TOP BANNER
+====================== */
 .banner-wrap{
   width:100%;
   background: linear-gradient(135deg, var(--egyptian-blue), var(--wisteria-blue));
-  border-bottom: 4px solid rgba(0,0,0,.1);
+  border-bottom:4px solid rgba(0,0,0,.1);
   position:sticky;
   top:0;
   z-index:50;
 }
 
 .banner-inner{
-  position:relative;
   max-width:1200px;
   margin:0 auto;
-  padding: 28px 20px 34px;
+  padding:28px 20px 34px;
   text-align:center;
   color:white;
+  position:relative;
 }
 
 .banner-title{
   font-size: clamp(28px, 4vw, 42px);
-  font-weight: 900;
-  letter-spacing: -1px;
+  font-weight:900;
   margin:0;
 }
 
 .banner-sub{
   margin-top:8px;
-  font-size: 16px;
+  font-size:16px;
   opacity:.9;
 }
 
@@ -88,17 +86,13 @@ body{
   color:white;
   font-weight:700;
   backdrop-filter: blur(6px);
-  transition:.2s;
-}
-.banner-home:hover{
-  background: rgba(255,255,255,.25);
 }
 
-/* =========================
-   FILTER RIBBON
-========================= */
+/* ======================
+   FILTERS
+====================== */
 .ribbon{
-  padding:18px 0 20px;
+  padding:18px 0;
 }
 
 .controls{
@@ -106,16 +100,15 @@ body{
   gap:10px;
   flex-wrap:wrap;
   align-items:center;
-  background: rgba(255,255,255,.9);
+  background:white;
   border:1px solid var(--border);
   border-radius:999px;
   padding:12px;
-  box-shadow: var(--shadow);
+  box-shadow:var(--shadow);
 }
 
 .input, .select{
   border:1px solid var(--border);
-  background:white;
   border-radius:999px;
   padding:12px 16px;
   font-size:14px;
@@ -125,7 +118,7 @@ body{
 .input{ flex:1 1 320px; }
 
 .input:focus, .select:focus{
-  box-shadow: var(--focus);
+  box-shadow:var(--focus);
 }
 
 .results{
@@ -134,12 +127,12 @@ body{
   color:var(--muted);
 }
 
-/* =========================
-   SHOP LAYOUT
-========================= */
+/* ======================
+   LAYOUT
+====================== */
 .shop-layout{
   display:grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns:1fr 360px;
   gap:18px;
   padding-bottom:50px;
 }
@@ -148,16 +141,13 @@ body{
   .shop-layout{ grid-template-columns:1fr; }
 }
 
-/* =========================
-   RIGHT PANEL
-========================= */
 .right-panel{
   position:sticky;
   top:260px;
   border-radius:22px;
   overflow:hidden;
   border:1px solid var(--border);
-  background:rgba(255,255,255,.9);
+  background:white;
   box-shadow:var(--shadow);
   min-height:520px;
 }
@@ -170,15 +160,14 @@ body{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
 }
 
-/* =========================
-   PRODUCT CARDS
-========================= */
+/* ======================
+   CARDS
+====================== */
 .grid{
   display:grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:16px;
 }
 
@@ -214,14 +203,9 @@ body{
 .title-row{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
 }
 
-h3{
-  margin:0;
-  font-size:17px;
-  font-weight:800;
-}
+h3{ margin:0; font-size:17px; }
 
 .price{
   font-weight:900;
@@ -254,13 +238,11 @@ h3{
   border-color:rgba(224,119,125,.3);
 }
 
-/* MATCHED TEXTBOX STYLE */
 .meta select{
   flex:1;
   border-radius:999px;
   padding:10px 14px;
   border:1px solid var(--border);
-  background:white;
 }
 
 .btn{
@@ -275,29 +257,6 @@ h3{
   text-align:center;
   margin-top:auto;
   box-shadow:var(--shadow);
-}
-
-.btn:hover{ filter:brightness(1.05); }
-
-/* =========================
-   MODAL
-========================= */
-.modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.7);
-  z-index:1000;
-}
-
-.modal.show{ display:flex; }
-
-.modal img{
-  max-width:90%;
-  max-height:85vh;
-  border-radius:18px;
 }
 </style>
 </head>
@@ -315,37 +274,59 @@ h3{
 <section class="ribbon">
   <div class="container">
     <div class="controls">
-      <input class="input" type="search" placeholder="Search models..." />
-      <select class="select">
-        <option>All categories</option>
+      <input class="input" id="searchInput" type="search" placeholder="Search models..." />
+      <select class="select" id="categoryFilter">
+        <option value="all">All categories</option>
       </select>
-      <select class="select">
-        <option>Sort: Featured</option>
+      <select class="select" id="sortSelect">
+        <option value="featured">Sort: Featured</option>
       </select>
-      <div class="results">7 models shown</div>
+      <div class="results" id="resultsCount"></div>
     </div>
   </div>
 </section>
 
 <main class="container">
   <div class="shop-layout">
-
     <section>
-      <div class="grid">
-        <!-- Your product cards remain here -->
-      </div>
+      <div class="grid" id="modelGrid"></div>
     </section>
 
     <aside class="right-panel">
       <img src="images/shop-side.png" alt="3D Divas character art">
     </aside>
-
   </div>
 </main>
 
-<div class="modal" id="modal">
-  <img src="" alt="">
-</div>
+<script>
+const models = [
+  { name:"Flexi Dragon", category:"Fantasy", price:12, desc:"Articulated desk dragon.", image:"images/flexi-dragon.png" },
+  { name:"Cute Axolotl", category:"Animals", price:10, desc:"Adorable shelf buddy.", image:"images/axolotl.png" }
+];
+
+const grid = document.getElementById("modelGrid");
+const resultsCount = document.getElementById("resultsCount");
+
+function render(){
+  grid.innerHTML = models.map(m => `
+    <div class="card">
+      <div class="thumb">
+        <img src="${m.image}" alt="${m.name}">
+      </div>
+      <div class="title-row">
+        <h3>${m.name}</h3>
+        <div class="price">$${m.price}</div>
+      </div>
+      <p class="desc">${m.desc}</p>
+      <a class="btn">Request This Print</a>
+    </div>
+  `).join("");
+
+  resultsCount.textContent = models.length + " models shown";
+}
+
+render();
+</script>
 
 </body>
 </html>
