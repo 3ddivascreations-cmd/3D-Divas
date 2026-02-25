@@ -129,18 +129,24 @@ body{
 
 .hero{
   width:min(var(--max),calc(100% - 32px));
-  margin-left:16px;   /* LEFT ANCHORED FOR DESKTOP */
+  margin-left:16px; /* LEFT ANCHORED FOR DESKTOP */
   margin-right:auto;
 }
 
 .panel{
-  max-width:760px;  /* keeps it off the girl */
   background:var(--panel-bg);
   border:1px solid var(--panel-border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding:clamp(18px,2.4vw,28px);
   backdrop-filter:blur(4px);
+}
+
+/* Set hero panel to match bottom panel width on desktop */
+@media (min-width:981px){
+  .hero .panel{
+    max-width: calc((var(--max) - 32px - 22px)/2); /* matches .infoRow panel width */
+  }
 }
 
 .headline{
@@ -231,7 +237,8 @@ body{
     margin:0 auto; /* centered */
   }
 
-  .panel{
+  .hero .panel,
+  .infoRow .panel{
     max-width:100%;
   }
 
