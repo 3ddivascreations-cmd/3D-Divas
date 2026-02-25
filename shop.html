@@ -1,328 +1,206 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>3D Divas — Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Divas Shop</title>
 
 <style>
 :root{
-  --honeydew:#ddf8e8;
-  --egyptian-blue:#38369a;
-  --light-coral:#e0777d;
-  --wisteria-blue:#7b8cde;
-  --wisteria-blue-2:#81a4cd;
-
-  --bg: var(--honeydew);
-  --text: #111827;
-  --muted: #475569;
-  --border: rgba(56,54,154,.18);
-  --primary: var(--egyptian-blue);
-  --shadow: 0 12px 34px rgba(0,0,0,.08);
-  --radius: 18px;
-  --focus: 0 0 0 4px rgba(123,140,222,.25);
+  --purple:#7c3aed;
+  --panel-bg:rgba(255,255,255,.92);
+  --panel-border:rgba(0,0,0,.08);
+  --radius:16px;
+  --shadow:0 10px 25px rgba(0,0,0,.12);
 }
-
-*{ box-sizing:border-box; }
 
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 18% 0%, rgba(123,140,222,.22), transparent 35%),
-    radial-gradient(circle at 92% 10%, rgba(224,119,125,.20), transparent 35%),
-    radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
-    var(--bg);
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f5f5f7;
 }
 
-.container{
-  width:min(1200px, calc(100% - 40px));
-  margin:0 auto;
-}
-
-/* ======================
-   PURPLE TOP BANNER
-====================== */
-.banner-wrap{
-  width:100%;
-  background: linear-gradient(135deg, var(--egyptian-blue), var(--wisteria-blue));
-  border-bottom:4px solid rgba(0,0,0,.1);
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-
-.banner-inner{
-  max-width:1200px;
-  margin:0 auto;
-  padding:28px 20px 34px;
+/* HERO */
+.hero{
+  padding:60px 20px;
   text-align:center;
-  color:white;
-  position:relative;
 }
 
-.banner-title{
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight:900;
-  margin:0;
-}
-
-.banner-sub{
-  margin-top:8px;
-  font-size:16px;
-  opacity:.9;
-}
-
-.banner-home{
-  position:absolute;
-  left:20px;
-  top:50%;
-  transform:translateY(-50%);
-  background: rgba(255,255,255,.15);
-  padding:10px 16px;
-  border-radius:999px;
-  text-decoration:none;
-  color:white;
-  font-weight:700;
-  backdrop-filter: blur(6px);
-}
-
-/* ======================
-   FILTERS
-====================== */
-.ribbon{
-  padding:18px 0;
-}
-
-.controls{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  background:white;
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:12px;
-  box-shadow:var(--shadow);
-}
-
-.input, .select{
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:12px 16px;
-  font-size:14px;
-  outline:none;
-}
-
-.input{ flex:1 1 320px; }
-
-.input:focus, .select:focus{
-  box-shadow:var(--focus);
-}
-
-.results{
-  margin-left:auto;
-  font-size:13px;
-  color:var(--muted);
-}
-
-/* ======================
-   LAYOUT
-====================== */
-.shop-layout{
-  display:grid;
-  grid-template-columns:1fr 360px;
-  gap:18px;
-  padding-bottom:50px;
-}
-
-@media (max-width:980px){
-  .shop-layout{ grid-template-columns:1fr; }
-}
-
-.right-panel{
-  position:sticky;
-  top:260px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--border);
-  background:white;
-  box-shadow:var(--shadow);
-  min-height:520px;
-}
-
-@media (max-width:980px){
-  .right-panel{ position:relative; top:0; min-height:260px; }
-}
-
-.right-panel img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* ======================
-   CARDS
-====================== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-@media (max-width:640px){
-  .grid{ grid-template-columns:1fr; }
-}
-
-.card{
-  background:white;
-  border:1px solid var(--border);
+.hero .panel{
+  background:var(--panel-bg);
+  border:1px solid var(--panel-border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
+  padding:30px;
+  margin:auto;
+  max-width:100%;
 }
 
-.thumb{
-  height:180px;
-  border-radius:14px;
-  border:1px dashed rgba(56,54,154,.25);
-  overflow:hidden;
-  cursor:pointer;
+/* Desktop width */
+@media(min-width:981px){
+  .hero .panel{
+    max-width:520px;
+  }
 }
 
-.thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+h1{
+  margin-top:0;
+  color:var(--purple);
 }
 
-.title-row{
-  display:flex;
-  justify-content:space-between;
+/* GRID */
+.shop{
+  padding:40px 20px;
 }
 
-h3{ margin:0; font-size:17px; }
-
-.price{
-  font-weight:900;
-  color:var(--primary);
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  max-width:1200px;
+  margin:auto;
 }
 
-.desc{
-  font-size:14px;
-  color:var(--muted);
-  margin:0;
-}
-
-.meta{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.pill{
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(123,140,222,.14);
-  border:1px solid rgba(123,140,222,.25);
-  font-size:12px;
-  font-weight:700;
-}
-
-.pill.accent{
-  background:rgba(224,119,125,.14);
-  border-color:rgba(224,119,125,.3);
-}
-
-.meta select{
-  flex:1;
-  border-radius:999px;
-  padding:10px 14px;
-  border:1px solid var(--border);
-}
-
-.btn{
-  background:var(--primary);
-  color:white;
-  border:none;
-  border-radius:999px;
-  padding:12px;
-  font-weight:900;
-  cursor:pointer;
-  text-decoration:none;
-  text-align:center;
-  margin-top:auto;
+/* CARD */
+.card{
+  background:white;
+  border-radius:var(--radius);
   box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:.2s ease;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+.no-image{
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eee;
+  font-weight:bold;
+  color:#666;
+}
+
+.card-body{
+  padding:18px;
+}
+
+.card h3{
+  margin:0 0 10px;
+}
+
+.card p{
+  margin:0;
+  font-size:14px;
+  color:#555;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.modal img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
+
+.modal.active{
+  display:flex;
 }
 </style>
 </head>
 
 <body>
 
-<div class="banner-wrap">
-  <div class="banner-inner">
-    <a href="index.html" class="banner-home">Home</a>
-    <h1 class="banner-title">3D Divas Shop</h1>
-    <div class="banner-sub">Fun. Custom. Made Just for You.</div>
-  </div>
-</div>
-
-<section class="ribbon">
-  <div class="container">
-    <div class="controls">
-      <input class="input" id="searchInput" type="search" placeholder="Search models..." />
-      <select class="select" id="categoryFilter">
-        <option value="all">All categories</option>
-      </select>
-      <select class="select" id="sortSelect">
-        <option value="featured">Sort: Featured</option>
-      </select>
-      <div class="results" id="resultsCount"></div>
-    </div>
+<section class="hero">
+  <div class="panel">
+    <h1>3D Divas Shop</h1>
+    <p>Fun. Creative. Custom 3D Prints.</p>
   </div>
 </section>
 
-<main class="container">
-  <div class="shop-layout">
-    <section>
-      <div class="grid" id="modelGrid"></div>
-    </section>
+<section class="shop">
+  <div class="grid" id="modelGrid"></div>
+</section>
 
-    <aside class="right-panel">
-      <img src="images/shop-side.png" alt="3D Divas character art">
-    </aside>
-  </div>
-</main>
+<!-- Modal -->
+<div class="modal" id="imageModal" onclick="closeModal()">
+  <img id="modalImage" src="" alt="">
+</div>
 
 <script>
 const models = [
-  { name:"Flexi Dragon", category:"Fantasy", price:12, desc:"Articulated desk dragon.", image:"images/flexi-dragon.png" },
-  { name:"Cute Axolotl", category:"Animals", price:10, desc:"Adorable shelf buddy.", image:"images/axolotl.png" }
+  { title:"Model 1", description:"Custom print design", image:"images/model1.jpg" },
+  { title:"Model 2", description:"Creative sculpture", image:"images/model2.jpg" },
+  { title:"Model 3", description:"Fun decor item", image:"images/model3.jpg" },
+  { title:"Model 4", description:"Colorful creation", image:"images/model4.jpg" },
+  { title:"Model 5", description:"Unique design", image:"images/model5.jpg" },
+  { title:"Model 6", description:"Modern art print", image:"images/model6.jpg" },
+  { title:"Model 7", description:"Custom display piece", image:"images/model7.jpg" },
+  { title:"Model 8", description:"Limited edition print", image:"images/model8.jpg" }
 ];
 
 const grid = document.getElementById("modelGrid");
-const resultsCount = document.getElementById("resultsCount");
 
 function render(){
-  grid.innerHTML = models.map(m => `
-    <div class="card">
-      <div class="thumb">
-        <img src="${m.image}" alt="${m.name}">
-      </div>
-      <div class="title-row">
-        <h3>${m.name}</h3>
-        <div class="price">$${m.price}</div>
-      </div>
-      <p class="desc">${m.desc}</p>
-      <a class="btn">Request This Print</a>
-    </div>
-  `).join("");
+  grid.innerHTML = "";
 
-  resultsCount.textContent = models.length + " models shown";
+  models.forEach(m => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const imageHTML = m.image
+      ? `<img src="${m.image}" alt="${m.title}" loading="lazy">`
+      : `<div class="no-image">Image Coming Soon</div>`;
+
+    card.innerHTML = `
+      ${imageHTML}
+      <div class="card-body">
+        <h3>${m.title}</h3>
+        <p>${m.description}</p>
+      </div>
+    `;
+
+    if(m.image){
+      card.addEventListener("click", () => openModal(m.image));
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+function openModal(src){
+  if(!src) return;
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  modalImg.src = src;
+  modal.classList.add("active");
+}
+
+function closeModal(){
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  modal.classList.remove("active");
+  modalImg.src = "";
 }
 
 render();
