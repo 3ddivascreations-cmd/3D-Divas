@@ -1,666 +1,351 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>3D Divas — Shop</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3D Divas — Shop</title>
 
-  <style>
-    :root{
-      --honeydew:#ddf8e8;
-      --egyptian-blue:#38369a;
-      --light-coral:#e0777d;
-      --wisteria-blue:#7b8cde;
-      --wisteria-blue-2:#81a4cd;
+<style>
+:root{
+  --honeydew:#ddf8e8;
+  --egyptian-blue:#38369a;
+  --light-coral:#e0777d;
+  --wisteria-blue:#7b8cde;
+  --wisteria-blue-2:#81a4cd;
 
-      --bg: var(--honeydew);
-      --text: #111827;
-      --muted: #475569;
-      --border: rgba(56,54,154,.18);
+  --bg: var(--honeydew);
+  --text: #111827;
+  --muted: #475569;
+  --border: rgba(56,54,154,.18);
 
-      --primary: var(--egyptian-blue);
-      --shadow: 0 12px 34px rgba(0,0,0,.08);
-      --radius: 18px;
-      --focus: 0 0 0 4px rgba(123,140,222,.25);
-    }
-
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 18% 0%, rgba(123,140,222,.22), transparent 35%),
-        radial-gradient(circle at 92% 10%, rgba(224,119,125,.20), transparent 35%),
-        radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
-        var(--bg);
-    }
-
-    .container{ width:min(1200px, calc(100% - 40px)); margin:0 auto; }
-
-    /* Banner (same as Page 1) */
-    .banner-wrap{
-      border-bottom: 1px solid rgba(56,54,154,.12);
-      background: rgba(221,248,232,.6);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-    }
-   .banner{
-  width: 100%;
-  height: auto;
-  display: block;
+  --primary: var(--egyptian-blue);
+  --shadow: 0 12px 34px rgba(0,0,0,.08);
+  --radius: 18px;
+  --focus: 0 0 0 4px rgba(123,140,222,.25);
 }
-    .banner-hotspot{ position: relative; }
-    .logo-hotspot{
-      position:absolute;
-      top:0;
-      left:0;
-      width: 28%;
-      height:100%;
-      display:block;
-      text-indent:-9999px;
-      overflow:hidden;
-    }
-    @media (max-width: 760px){
-      .logo-hotspot{ width: 40%; }
-    }
 
-    /* Ribbon (filters) */
-    .ribbon{
-      padding: 14px 0 16px;
-    }
-    .controls{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      background: rgba(255,255,255,.78);
-      border: 1px solid rgba(56,54,154,.12);
-      border-radius: 999px;
-      padding: 10px;
-      box-shadow: var(--shadow);
-    }
-    .input, .select{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.92);
-      border-radius: 999px;
-      padding: 12px 14px;
-      font-size: 14px;
-      outline:none;
-    }
-    .input{ flex: 1 1 360px; min-width: 240px; }
-    .input:focus, .select:focus{ box-shadow: var(--focus); }
-    .results{ margin-left:auto; font-size: 12px; color: rgba(71,85,105,.95); padding-right: 6px; }
+*{ box-sizing:border-box; }
 
-    /* Two-column layout: cards left, big image right */
-    .shop-layout{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap: 16px;
-      padding: 6px 0 40px;
-      align-items:start;
-    }
-    @media (max-width: 980px){
-      .shop-layout{ grid-template-columns: 1fr; }
-    }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(123,140,222,.22), transparent 35%),
+    radial-gradient(circle at 92% 10%, rgba(224,119,125,.20), transparent 35%),
+    radial-gradient(circle at 70% 90%, rgba(129,164,205,.18), transparent 40%),
+    var(--bg);
+}
 
-    .right-panel{
-      position: sticky;
-      top: 290px; /* below banner + ribbon */
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(56,54,154,.14);
-      background: rgba(255,255,255,.65);
-      box-shadow: var(--shadow);
-      min-height: 520px;
-    }
-    @media (max-width: 980px){
-      .right-panel{ position: relative; top: 0; min-height: 240px; }
-    }
-    .right-panel img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-    }
-    .right-panel .placeholder{
-      padding: 18px;
-      color: rgba(56,54,154,.75);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .8px;
-      text-align:center;
-    }
+.container{
+  width:min(1200px, calc(100% - 40px));
+  margin:0 auto;
+}
 
-    /* Cards grid (left side) */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 640px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-    .card{
-      background: rgba(255,255,255,.92);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height: 300px;
-    }
+/* =========================
+   TOP PURPLE BANNER
+========================= */
+.banner-wrap{
+  width:100%;
+  background: linear-gradient(135deg, var(--egyptian-blue), var(--wisteria-blue));
+  border-bottom: 4px solid rgba(0,0,0,.1);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
 
-    .thumb{
-      height: 180px;
-      border-radius: 14px;
-      border: 1px dashed rgba(56,54,154,.25);
-      background: rgba(255,255,255,.7);
-      overflow:hidden;
-      cursor: zoom-in;
-    }
-    .thumb:focus{ outline:none; box-shadow: var(--focus); }
-    .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.banner-inner{
+  position:relative;
+  max-width:1200px;
+  margin:0 auto;
+  padding: 28px 20px 34px;
+  text-align:center;
+  color:white;
+}
 
-    .title-row{ display:flex; justify-content:space-between; gap:12px; }
-    h3{ margin:0; font-size: 16px; letter-spacing:-.2px; }
-    .price{ font-weight: 900; color: var(--primary); white-space:nowrap; }
-    .desc{ margin:0; color: var(--muted); font-size: 14px; line-height:1.55; }
+.banner-title{
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin:0;
+}
 
-    .meta{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-    .pill{
-      border:1px solid rgba(56,54,154,.18);
-      background: rgba(123,140,222,.14);
-      color: rgba(56,54,154,.92);
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .pill.accent{
-      background: rgba(224,119,125,.14);
-      border-color: rgba(224,119,125,.22);
-      color: #7a1c22;
-    }
+.banner-sub{
+  margin-top:8px;
+  font-size: 16px;
+  opacity:.9;
+}
 
-    .btn{
-      background: var(--primary);
-      color:#fff;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 900;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      cursor:pointer;
-      box-shadow: var(--shadow);
-    }
-    .btn:hover{ filter: brightness(1.05); }
-    .btn:focus{ outline:none; box-shadow: var(--shadow), var(--focus); }
-    .small{ font-size:12px; color: rgba(71,85,105,.95); }
+.banner-home{
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  background: rgba(255,255,255,.15);
+  padding:10px 16px;
+  border-radius:999px;
+  text-decoration:none;
+  color:white;
+  font-weight:700;
+  backdrop-filter: blur(6px);
+  transition:.2s;
+}
+.banner-home:hover{
+  background: rgba(255,255,255,.25);
+}
 
-    /* Modal */
-    .modal{
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(17,24,39,.72);
-      z-index: 1000;
-    }
-    .modal[aria-hidden="false"]{ display:flex; }
-    .modal-dialog{
-      width: min(1100px, 100%);
-      max-height: min(88vh, 900px);
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(56,54,154,.22);
-      border-radius: 18px;
-      box-shadow: 0 24px 70px rgba(0,0,0,.25);
-      overflow: hidden;
-    }
-    .modal-topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 10px 12px;
-      background: rgba(221,248,232,.75);
-      border-bottom: 1px solid rgba(56,54,154,.14);
-    }
-    .modal-title{
-      font-weight: 900;
-      color: var(--primary);
-      font-size: 14px;
-      line-height:1.2;
-      margin:0;
-    }
-    .modal-close{
-      appearance:none;
-      border: 1px solid rgba(56,54,154,.18);
-      background: rgba(255,255,255,.9);
-      color: var(--primary);
-      border-radius: 999px;
-      padding: 8px 10px;
-      cursor:pointer;
-      font-weight: 900;
-    }
-    .modal-close:focus{ outline:none; box-shadow: var(--focus); }
-    .modal-body{
-      background: rgba(255,255,255,.9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 12px;
-    }
-    .modal-img{
-      max-width: 100%;
-      max-height: calc(88vh - 64px);
-      width: auto;
-      height: auto;
-      border-radius: 14px;
-      object-fit: contain;
-      background: rgba(56,54,154,.04);
-    }
-  </style>
+/* =========================
+   FILTER RIBBON
+========================= */
+.ribbon{
+  padding:18px 0 20px;
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  background: rgba(255,255,255,.9);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:12px;
+  box-shadow: var(--shadow);
+}
+
+.input, .select{
+  border:1px solid var(--border);
+  background:white;
+  border-radius:999px;
+  padding:12px 16px;
+  font-size:14px;
+  outline:none;
+}
+
+.input{ flex:1 1 320px; }
+
+.input:focus, .select:focus{
+  box-shadow: var(--focus);
+}
+
+.results{
+  margin-left:auto;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* =========================
+   SHOP LAYOUT
+========================= */
+.shop-layout{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:18px;
+  padding-bottom:50px;
+}
+
+@media (max-width:980px){
+  .shop-layout{ grid-template-columns:1fr; }
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+.right-panel{
+  position:sticky;
+  top:260px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.9);
+  box-shadow:var(--shadow);
+  min-height:520px;
+}
+
+@media (max-width:980px){
+  .right-panel{ position:relative; top:0; min-height:260px; }
+}
+
+.right-panel img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* =========================
+   PRODUCT CARDS
+========================= */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:16px;
+}
+
+@media (max-width:640px){
+  .grid{ grid-template-columns:1fr; }
+}
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.thumb{
+  height:180px;
+  border-radius:14px;
+  border:1px dashed rgba(56,54,154,.25);
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+h3{
+  margin:0;
+  font-size:17px;
+  font-weight:800;
+}
+
+.price{
+  font-weight:900;
+  color:var(--primary);
+}
+
+.desc{
+  font-size:14px;
+  color:var(--muted);
+  margin:0;
+}
+
+.meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.pill{
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(123,140,222,.14);
+  border:1px solid rgba(123,140,222,.25);
+  font-size:12px;
+  font-weight:700;
+}
+
+.pill.accent{
+  background:rgba(224,119,125,.14);
+  border-color:rgba(224,119,125,.3);
+}
+
+/* MATCHED TEXTBOX STYLE */
+.meta select{
+  flex:1;
+  border-radius:999px;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  background:white;
+}
+
+.btn{
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:999px;
+  padding:12px;
+  font-weight:900;
+  cursor:pointer;
+  text-decoration:none;
+  text-align:center;
+  margin-top:auto;
+  box-shadow:var(--shadow);
+}
+
+.btn:hover{ filter:brightness(1.05); }
+
+/* =========================
+   MODAL
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.7);
+  z-index:1000;
+}
+
+.modal.show{ display:flex; }
+
+.modal img{
+  max-width:90%;
+  max-height:85vh;
+  border-radius:18px;
+}
+</style>
 </head>
 
 <body>
-  <!-- Banner -->
-  <div class="banner-wrap">
-    <div class="banner-hotspot">
-      <img class="banner" src="images/banner.png" alt="3D Divas banner" />
-      <a class="logo-hotspot" href="index.html" aria-label="Go to 3D Divas home">Home</a>
+
+<div class="banner-wrap">
+  <div class="banner-inner">
+    <a href="index.html" class="banner-home">Home</a>
+    <h1 class="banner-title">3D Divas Shop</h1>
+    <div class="banner-sub">Fun. Custom. Made Just for You.</div>
+  </div>
+</div>
+
+<section class="ribbon">
+  <div class="container">
+    <div class="controls">
+      <input class="input" type="search" placeholder="Search models..." />
+      <select class="select">
+        <option>All categories</option>
+      </select>
+      <select class="select">
+        <option>Sort: Featured</option>
+      </select>
+      <div class="results">7 models shown</div>
     </div>
   </div>
+</section>
 
-  <!-- Ribbon -->
-  <section class="ribbon">
-    <div class="container">
-      <div class="controls" role="region" aria-label="Filters">
-        <input class="input" id="searchInput" type="search" placeholder="Search models (ex: dragon, keychain, planter…)" />
-        <select class="select" id="categoryFilter" aria-label="Filter by category">
-          <option value="all">All categories</option>
-        </select>
-        <select class="select" id="sortSelect" aria-label="Sort models">
-          <option value="featured">Sort: Featured</option>
-          <option value="priceLow">Price: Low to High</option>
-          <option value="priceHigh">Price: High to Low</option>
-          <option value="nameAZ">Name: A to Z</option>
-        </select>
-        <div class="results" id="resultsCount"></div>
+<main class="container">
+  <div class="shop-layout">
+
+    <section>
+      <div class="grid">
+        <!-- Your product cards remain here -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Shop layout -->
-  <main class="container">
-    <div class="shop-layout">
-      <!-- LEFT: cards -->
-      <section>
-        <div class="grid" id="modelGrid" aria-live="polite"></div>
-      </section>
+    <aside class="right-panel">
+      <img src="images/shop-side.png" alt="3D Divas character art">
+    </aside>
 
-      <!-- RIGHT: big image panel -->
-      <aside class="right-panel" aria-label="Shop side image">
-        <!-- Put your right-side image here -->
-        <img src="images/shop-side.png" alt="3D Divas character art" onerror="this.remove(); this.parentElement.innerHTML='<div class=&quot;placeholder&quot;>Optional right-side image</div>';">
-      </aside>
-    </div>
-  </main>
-
-  <!-- Image Modal -->
-  <div class="modal" id="imgModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
-    <div class="modal-dialog" role="document">
-      <div class="modal-topbar">
-        <p class="modal-title" id="imgModalTitle">Preview</p>
-        <button class="modal-close" type="button" id="imgModalClose" aria-label="Close preview">Close ✕</button>
-      </div>
-      <div class="modal-body">
-        <img class="modal-img" id="imgModalImg" alt="" />
-      </div>
-    </div>
   </div>
+</main>
 
-  <script>
-    // =========================
-    // CHANGE THIS EMAIL
-    // =========================
-    const SITE_EMAIL = "YOUR_EMAIL_HERE"; // example: stewart@example.com
+<div class="modal" id="modal">
+  <img src="" alt="">
+</div>
 
-    // =========================
-    // MODELS
-    // (thumb = thumbnail, image = full size)
-    // Update these to your real files
-    // =========================
-    const models = [
-      {
-        name: "Flexi Dragon",
-        category: "Fantasy",
-        price: 12,
-        featured: true,
-        sizes: ["Small", "Medium", "Large"],
-        colors: ["Purple", "Blue", "Pink", "Black", "White"],
-        turnaround: "2–5 days",
-        desc: "A fun articulated dragon that wiggles and poses great on a desk.",
-        thumb: "images/thumbs/flexi-dragon.png",
-        image: "images/flexi-dragon.png"
-      },
-      {
-        name: "Cute Axolotl",
-        category: "Animals",
-        price: 10,
-        featured: true,
-        sizes: ["Small", "Medium"],
-        colors: ["Pink", "Mint", "White", "Rainbow (ask)"],
-        turnaround: "2–5 days",
-        desc: "A sweet little axolotl — great gift or shelf buddy.",
-        thumb: "images/thumbs/axolotl.png",
-        image: "images/axolotl.png"
-      },
-      {
-        name: "Fidget Spiral",
-        category: "Fidgets",
-        price: 6,
-        featured: true,
-        sizes: ["One size"],
-        colors: ["Red", "Blue", "Green", "Purple", "Two-tone (ask)"],
-        turnaround: "1–3 days",
-        desc: "A satisfying fidget that spins and clicks gently.",
-        thumb: "images/thumbs/fidget_spiral.png",
-        image: "images/fidget_spiral.png"
-      },
-      {
-        name: "Heart Keychain",
-        category: "Keychains",
-        price: 5,
-        featured: false,
-        sizes: ["Small"],
-        colors: ["Pink", "Red", "White", "Black"],
-        turnaround: "1–3 days",
-        desc: "A simple heart keychain. Add initials by request.",
-        thumb: "images/thumbs/keychain_heart.png",
-        image: "images/keychain_heart.png"
-      },
-      {
-        name: "Desk Name Plate",
-        category: "Personalized",
-        price: 15,
-        featured: false,
-        sizes: ["Short", "Standard", "Long"],
-        colors: ["White", "Black", "Blue", "Two-tone (ask)"],
-        turnaround: "3–7 days",
-        desc: "A custom name plate for desks. Email the name + color choice.",
-        thumb: "images/thumbs/nameplate.png",
-        image: "images/nameplate.png"
-      },
-      {
-        name: "Mini Planter",
-        category: "Home & Decor",
-        price: 9,
-        featured: false,
-        sizes: ["Small", "Medium"],
-        colors: ["White", "Gray", "Blue", "Pink"],
-        turnaround: "2–5 days",
-        desc: "A tiny planter for succulents or desk decor (liner recommended).",
-        thumb: "images/thumbs/mini_planter.png",
-        image: "images/mini_planter.png"
-      },
-      {
-        name: "Snowflake Ornament",
-        category: "Seasonal",
-        price: 7,
-        featured: false,
-        sizes: ["Small", "Medium"],
-        colors: ["White", "Silver (ask)", "Blue"],
-        turnaround: "2–5 days",
-        desc: "Seasonal ornament — lightweight and easy to hang.",
-        thumb: "images/thumbs/ornament_snowflake.png",
-        image: "images/ornament_snowflake.png"
-      }
-    ];
-
-    // =========================
-    // Utilities
-    // =========================
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-    function toUSD(num){
-      try{
-        return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(num);
-      } catch {
-        return "$" + Number(num).toFixed(2);
-      }
-    }
-    function buildMailtoForModel(model, chosenSize, chosenColor){
-      const subject = `3D Divas - Print Request: ${model.name}`;
-      const body =
-`Hi Stewart,
-
-I would like to request this 3D print:
-
-Model: ${model.name}
-Category: ${model.category}
-Size: ${chosenSize || "Not selected"}
-Color: ${chosenColor || "Not selected"}
-Quantity: 1
-
-Notes / personalization (optional):
--
-
-Delivery (pickup or shipping):
--
-
-Thanks!`;
-      return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    }
-
-    // =========================
-    // Modal
-    // =========================
-    const imgModal = document.getElementById("imgModal");
-    const imgModalImg = document.getElementById("imgModalImg");
-    const imgModalTitle = document.getElementById("imgModalTitle");
-    const imgModalClose = document.getElementById("imgModalClose");
-    let lastFocusEl = null;
-
-    function openModal(src, title){
-      if(!src) return;
-      lastFocusEl = document.activeElement;
-      imgModalTitle.textContent = title || "Preview";
-      imgModalImg.src = src;
-      imgModalImg.alt = title ? `${title} preview` : "Preview";
-      imgModal.setAttribute("aria-hidden","false");
-      document.body.style.overflow = "hidden";
-      imgModalClose.focus();
-    }
-    function closeModal(){
-      imgModal.setAttribute("aria-hidden","true");
-      imgModalImg.src = "";
-      document.body.style.overflow = "";
-      if(lastFocusEl && typeof lastFocusEl.focus === "function") lastFocusEl.focus();
-    }
-    imgModal.addEventListener("click",(e)=>{ if(e.target === imgModal) closeModal(); });
-    imgModalClose.addEventListener("click", closeModal);
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape" && imgModal.getAttribute("aria-hidden")==="false") closeModal(); });
-
-    // =========================
-    // Render
-    // =========================
-    const grid = document.getElementById("modelGrid");
-    const resultsCount = document.getElementById("resultsCount");
-    const searchInput = document.getElementById("searchInput");
-    const categoryFilter = document.getElementById("categoryFilter");
-    const sortSelect = document.getElementById("sortSelect");
-
-    // categories
-    const categories = Array.from(new Set(models.map(m=>m.category))).sort((a,b)=>a.localeCompare(b));
-    for(const c of categories){
-      const opt = document.createElement("option");
-      opt.value = c;
-      opt.textContent = c;
-      categoryFilter.appendChild(opt);
-    }
-
-    function matches(model, q, category){
-      const haystack = [
-        model.name, model.category, model.desc, model.turnaround,
-        ...(model.sizes||[]), ...(model.colors||[])
-      ].join(" ").toLowerCase();
-
-      const queryOk = !q || haystack.includes(q);
-      const categoryOk = (category==="all") || (model.category===category);
-      return queryOk && categoryOk;
-    }
-
-    function sortModels(arr, mode){
-      const copy = [...arr];
-      if(mode==="priceLow") copy.sort((a,b)=>a.price-b.price);
-      else if(mode==="priceHigh") copy.sort((a,b)=>b.price-a.price);
-      else if(mode==="nameAZ") copy.sort((a,b)=>a.name.localeCompare(b.name));
-      else {
-        copy.sort((a,b)=>{
-          const af = a.featured ? 1 : 0;
-          const bf = b.featured ? 1 : 0;
-          if(bf!==af) return bf-af;
-          return a.name.localeCompare(b.name);
-        });
-      }
-      return copy;
-    }
-
-    function render(){
-      const q = (searchInput.value||"").trim().toLowerCase();
-      const category = categoryFilter.value;
-      const sortMode = sortSelect.value;
-
-      const filtered = models.filter(m=>matches(m,q,category));
-      const sorted = sortModels(filtered, sortMode);
-
-      resultsCount.textContent = `${sorted.length} model${sorted.length===1?"":"s"} shown`;
-
-      if(sorted.length===0){
-        grid.innerHTML = `
-          <div class="card" style="grid-column:1 / -1;">
-            <h3>No matches</h3>
-            <p class="desc">Try a different search term or choose “All categories”.</p>
-          </div>`;
-        return;
-      }
-
-      grid.innerHTML = sorted.map((m, idx)=>{
-        const safeName = escapeHtml(m.name);
-        const safeCat = escapeHtml(m.category);
-        const safeDesc = escapeHtml(m.desc);
-        const safeTurn = escapeHtml(m.turnaround||"Ask");
-        const priceText = `From ${toUSD(m.price)}`;
-
-        const sizeOptions = (m.sizes||["One size"]).map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
-        const colorOptions = (m.colors||["Ask"]).map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
-
-        const sizeId = `size_${idx}`;
-        const colorId = `color_${idx}`;
-        const emailId = `email_${idx}`;
-
-        const thumbSrc = m.thumb || m.image || "";
-        const fullSrc  = m.image || "";
-
-        return `
-          <article class="card">
-            <div class="thumb" role="button" tabindex="0"
-                 data-full="${escapeHtml(fullSrc)}"
-                 data-title="${safeName}"
-                 aria-label="Open image for ${safeName}">
-              ${
-                thumbSrc
-                  ? `<img src="${escapeHtml(thumbSrc)}" alt="${safeName} photo" loading="lazy"
-                         onerror="if(this.dataset.fallback!=='1'){this.dataset.fallback='1'; this.src='${escapeHtml(fullSrc)}';} else {this.remove(); this.parentElement.innerHTML='';}" />`
-                  : ``
-              }
-            </div>
-
-            <div class="title-row">
-              <div>
-                <h3>${safeName}</h3>
-                <div class="meta" style="margin-top:8px;">
-                  <span class="pill">${safeCat}</span>
-                  ${m.featured ? `<span class="pill accent">Popular</span>` : ``}
-                  <span class="pill">Turnaround: ${safeTurn}</span>
-                </div>
-              </div>
-              <div class="price">${escapeHtml(priceText)}</div>
-            </div>
-
-            <p class="desc">${safeDesc}</p>
-
-            <div class="meta" style="gap:10px; align-items:center;">
-              <span class="small" style="min-width:56px;">Size</span>
-              <select class="select" id="${sizeId}" aria-label="Choose size for ${safeName}" style="flex:1;">${sizeOptions}</select>
-            </div>
-
-            <div class="meta" style="gap:10px; align-items:center;">
-              <span class="small" style="min-width:56px;">Color</span>
-              <select class="select" id="${colorId}" aria-label="Choose color for ${safeName}" style="flex:1;">${colorOptions}</select>
-            </div>
-
-            <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
-              <a class="btn" id="${emailId}" href="#">✉️ Request This Print</a>
-              <span class="small">Email opens with details filled in.</span>
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      // mailto wiring
-      sorted.forEach((m, idx)=>{
-        const sizeEl = document.getElementById(`size_${idx}`);
-        const colorEl = document.getElementById(`color_${idx}`);
-        const emailEl = document.getElementById(`email_${idx}`);
-
-        function updateMailto(){
-          emailEl.setAttribute("href", buildMailtoForModel(m, sizeEl?.value, colorEl?.value));
-        }
-        sizeEl?.addEventListener("change", updateMailto);
-        colorEl?.addEventListener("change", updateMailto);
-        updateMailto();
-      });
-    }
-
-    // thumb modal (event delegation)
-    grid.addEventListener("click", (e)=>{
-      const t = e.target.closest(".thumb");
-      if(!t) return;
-      openModal(t.getAttribute("data-full"), t.getAttribute("data-title")||"Preview");
-    });
-    grid.addEventListener("keydown", (e)=>{
-      const t = e.target.closest(".thumb");
-      if(!t) return;
-      if(e.key==="Enter" || e.key===" "){
-        e.preventDefault();
-        openModal(t.getAttribute("data-full"), t.getAttribute("data-title")||"Preview");
-      }
-    });
-
-    searchInput.addEventListener("input", render);
-    categoryFilter.addEventListener("change", render);
-    sortSelect.addEventListener("change", render);
-
-    render();
-  </script>
 </body>
 </html>
-
