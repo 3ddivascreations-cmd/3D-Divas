@@ -1,200 +1,293 @@
-<script>
-// =========================
-// CHANGE THIS EMAIL
-// =========================
-const SITE_EMAIL = "YOUR_EMAIL_HERE";
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Divas — Shop</title>
 
-// =========================
-// MODELS
-// =========================
-const models = [
-  {
-    name: "Flexi Dragon",
-    category: "Fantasy",
-    price: 12,
-    featured: true,
-    sizes: ["Small", "Medium", "Large"],
-    colors: ["Purple", "Blue", "Pink", "Black", "White"],
-    turnaround: "2–5 days",
-    desc: "A fun articulated dragon that wiggles and poses great on a desk.",
-    thumb: "images/thumbs/flexi-dragon.png",
-    image: "images/flexi-dragon.png"
-  },
-  {
-    name: "Cute Axolotl",
-    category: "Animals",
-    price: 10,
-    featured: true,
-    sizes: ["Small", "Medium"],
-    colors: ["Pink", "Mint", "White", "Rainbow (ask)"],
-    turnaround: "2–5 days",
-    desc: "A sweet little axolotl — great gift or shelf buddy.",
-    thumb: "images/thumbs/axolotl.png",
-    image: "images/axolotl.png"
-  },
-  {
-    name: "Fidget Spiral",
-    category: "Fidgets",
-    price: 6,
-    featured: true,
-    sizes: ["One size"],
-    colors: ["Red", "Blue", "Green", "Purple", "Two-tone (ask)"],
-    turnaround: "1–3 days",
-    desc: "A satisfying fidget that spins and clicks gently.",
-    thumb: "images/thumbs/fidget_spiral.png",
-    image: "images/fidget_spiral.png"
-  },
-  {
-    name: "Heart Keychain",
-    category: "Keychains",
-    price: 5,
-    featured: false,
-    sizes: ["Small"],
-    colors: ["Pink", "Red", "White", "Black"],
-    turnaround: "1–3 days",
-    desc: "A simple heart keychain. Add initials by request.",
-    thumb: "images/thumbs/keychain_heart.png",
-    image: "images/keychain_heart.png"
-  },
-  {
-    name: "Desk Name Plate",
-    category: "Personalized",
-    price: 15,
-    featured: false,
-    sizes: ["Short", "Standard", "Long"],
-    colors: ["White", "Black", "Blue", "Two-tone (ask)"],
-    turnaround: "3–7 days",
-    desc: "A custom name plate for desks. Email the name + color choice.",
-    thumb: "images/thumbs/nameplate.png",
-    image: "images/nameplate.png"
-  },
-  {
-    name: "Mini Planter",
-    category: "Home & Decor",
-    price: 9,
-    featured: false,
-    sizes: ["Small", "Medium"],
-    colors: ["White", "Gray", "Blue", "Pink"],
-    turnaround: "2–5 days",
-    desc: "A tiny planter for succulents or desk decor.",
-    thumb: "images/thumbs/mini_planter.png",
-    image: "images/mini_planter.png"
-  },
-  {
-    name: "Snowflake Ornament",
-    category: "Seasonal",
-    price: 7,
-    featured: false,
-    sizes: ["Small", "Medium"],
-    colors: ["White", "Blue"],
-    turnaround: "2–5 days",
-    desc: "Seasonal ornament — lightweight and easy to hang.",
-    thumb: "images/thumbs/ornament_snowflake.png",
-    image: "images/ornament_snowflake.png"
-  }
-];
+<style>
+:root{
+  --purple:#3a2a7a;
+  --purple-dark:#2f2168;
 
-// =========================
-// Helpers
-// =========================
-function toUSD(num){
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",
-    currency:"USD"
-  }).format(num);
+  --ink:#0f172a;
+  --muted:#475569;
+
+  --card-bg:#ffffff;
+  --border:rgba(56,54,154,.25);
+
+  --radius:18px;
+  --shadow:0 14px 32px rgba(15,23,42,.12);
+
+  --max:1200px;
 }
 
-function buildMailto(model, size, color){
-  const subject = `3D Divas - Print Request: ${model.name}`;
-  const body = `
-Hi Stewart,
-
-I would like to request this 3D print:
-
-Model: ${model.name}
-Category: ${model.category}
-Size: ${size}
-Color: ${color}
-
-Thanks!
-  `;
-  return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:#dff6e9;
+  color:var(--ink);
 }
 
-// =========================
-// Modal
-// =========================
-const modal = document.getElementById("imgModal");
-const modalImg = document.getElementById("imgModalImg");
-const modalTitle = document.getElementById("imgModalTitle");
-const modalClose = document.getElementById("imgModalClose");
+/* ===== Layout ===== */
 
-function openModal(src, title){
-  if(!src) return;
-  modalImg.src = src;
-  modalTitle.textContent = title;
-  modal.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
+.wrap{
+  width:min(var(--max),calc(100% - 32px));
+  margin:0 auto;
 }
 
-function closeModal(){
-  modal.setAttribute("aria-hidden","true");
-  modalImg.src = "";
-  document.body.style.overflow = "";
+/* ===== Top / Bottom Bars ===== */
+
+.topbar,.bottombar{
+  background:linear-gradient(180deg,var(--purple),var(--purple-dark));
+  color:#fff;
 }
 
-modalClose.addEventListener("click", closeModal);
-modal.addEventListener("click", e=>{
-  if(e.target === modal) closeModal();
-});
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  flex-wrap:wrap;
+}
 
-// =========================
-// Render
-// =========================
-const grid = document.getElementById("modelGrid");
+.brand{
+  text-decoration:none;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+}
 
-function render(){
-  grid.innerHTML = "";
+.brand strong{font-size:16px;}
+.brand small{font-size:12px;opacity:.9;}
 
-  models.forEach((m, index)=>{
-    const card = document.createElement("article");
-    card.className = "card";
+.links{
+  display:flex;
+  gap:20px;
+}
 
-    card.innerHTML = `
-      <div class="thumb" data-full="${m.image}" data-title="${m.name}" tabindex="0">
-        <img src="${m.thumb || m.image}" alt="${m.name}" loading="lazy">
+.links a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+}
+
+.links a:hover{ text-decoration:underline; }
+
+.foot{
+  padding:14px 0;
+  text-align:center;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* ===== Page Header ===== */
+
+.page-header{
+  padding:36px 0 18px;
+}
+
+.page-title{
+  margin:0 0 8px;
+  font-size:clamp(26px,3vw,36px);
+  color:#2b2a72;
+}
+
+.page-sub{
+  margin:0;
+  color:var(--muted);
+}
+
+/* ===== Product Grid ===== */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+  padding:24px 0 40px;
+}
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.card h3{
+  margin:0;
+  font-size:18px;
+  color:#2b2a72;
+}
+
+.price{
+  font-weight:800;
+  color:#111827;
+}
+
+.desc{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+/* ===== Buttons ===== */
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 16px;
+  border-radius:999px;
+  font-weight:900;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.btn-request{
+  background:linear-gradient(180deg,#2f2b84,#2a256e);
+  color:#fff;
+  box-shadow:0 14px 30px rgba(15,23,42,.14);
+}
+
+.btn-request:hover{ filter:brightness(1.05); }
+
+.btn-back{
+  margin-top:10px;
+  display:inline-block;
+  font-weight:800;
+  color:#2b2a72;
+  text-decoration:none;
+}
+
+.btn-back:hover{ text-decoration:underline; }
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <strong>3D Divas</strong>
+        <small>3D Printed Creations</small>
+      </a>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="#">Email</a>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="title-row">
-        <div>
-          <h3>${m.name}</h3>
-          <div class="meta" style="margin-top:8px;">
-            <span class="pill">${m.category}</span>
-            ${m.featured ? `<span class="pill accent">Popular</span>` : ""}
-            <span class="pill">Turnaround: ${m.turnaround}</span>
-          </div>
-        </div>
-        <div class="price">From ${toUSD(m.price)}</div>
-      </div>
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="wrap">
+    <h1 class="page-title">Shop Our Models</h1>
+    <p class="page-sub">
+      Click “Request This Print” and your email app will open with the model name ready to send.
+    </p>
+  </div>
+</section>
 
-      <p class="desc">${m.desc}</p>
+<!-- PRODUCT GRID -->
+<section>
+  <div class="wrap">
+    <div class="grid">
 
-      <div style="margin-top:auto;">
-        <a class="btn" href="${buildMailto(m, m.sizes[0], m.colors[0])}">
-          ✉️ Request This Print
+      <!-- ITEM 1 -->
+      <div class="card">
+        <img src="images/model1.jpg" alt="">
+        <h3>Mini Chicken Figurine</h3>
+        <div class="price">Starting at $5</div>
+        <p class="desc">
+          Cute mini chicken perfect for desks, gifts, or collections.
+        </p>
+        <a class="btn btn-request" href="#" onclick="requestPrint('Mini Chicken Figurine', '$5')">
+          Request This Print
         </a>
       </div>
-    `;
 
-    grid.appendChild(card);
-  });
+      <!-- ITEM 2 -->
+      <div class="card">
+        <img src="images/model2.jpg" alt="">
+        <h3>Custom Name Keychain</h3>
+        <div class="price">Starting at $8</div>
+        <p class="desc">
+          Personalized keychains in your favorite colors.
+        </p>
+        <a class="btn btn-request" href="#" onclick="requestPrint('Custom Name Keychain', '$8')">
+          Request This Print
+        </a>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="card">
+        <img src="images/model3.jpg" alt="">
+        <h3>Articulated Dragon</h3>
+        <div class="price">Starting at $15</div>
+        <p class="desc">
+          Flexible dragon with movable joints. Fun and detailed!
+        </p>
+        <a class="btn btn-request" href="#" onclick="requestPrint('Articulated Dragon', '$15')">
+          Request This Print
+        </a>
+      </div>
+
+    </div>
+
+    <a class="btn-back" href="index.html">← Back to Home</a>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="bottombar">
+  <div class="wrap">
+    <div class="foot">© <span id="year"></span> 3D Divas — Email Requests Only</div>
+  </div>
+</div>
+
+<script>
+const SITE_EMAIL = "YOUR_EMAIL_HERE";
+
+function requestPrint(modelName, price){
+  const subject = `3D Divas Print Request - ${modelName}`;
+  const body =
+`Hi Stewart,
+
+I would like to request the following print:
+
+Model: ${modelName}
+Starting Price: ${price}
+
+Color:
+Size:
+Quantity:
+
+Thank you!`;
+
+  window.location.href =
+    `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-grid.addEventListener("click", e=>{
-  const t = e.target.closest(".thumb");
-  if(!t) return;
-  openModal(t.dataset.full, t.dataset.title);
-});
-
-render();
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 </script>
+
+</body>
+</html>
