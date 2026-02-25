@@ -123,18 +123,18 @@ body{
   z-index:2;
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:20px;
 }
 
-/* ===== Hero Panel ===== */
+/* ===== Hero Layout ===== */
 
 .hero{
   width:min(var(--max),calc(100% - 32px));
-  margin:0 auto;
+  margin-left:16px;   /* LEFT ANCHORED FOR DESKTOP */
+  margin-right:auto;
 }
 
 .panel{
+  max-width:760px;  /* keeps it off the girl */
   background:var(--panel-bg);
   border:1px solid var(--panel-border);
   border-radius:var(--radius);
@@ -223,7 +223,16 @@ body{
   .stage-content{
     position:absolute;
     inset:0;
-    align-items:center;
+    justify-content:center; /* CENTER PANEL */
+    padding:20px;
+  }
+
+  .hero{
+    margin:0 auto; /* centered */
+  }
+
+  .panel{
+    max-width:100%;
   }
 
   .infoRow{
@@ -236,7 +245,6 @@ body{
 
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="wrap">
     <div class="nav">
@@ -253,7 +261,6 @@ body{
   </div>
 </div>
 
-<!-- BANNER -->
 <div class="banner">
   <picture>
     <source media="(max-width:640px)" srcset="images/banner-mobile.png">
@@ -262,7 +269,6 @@ body{
   </picture>
 </div>
 
-<!-- HERO STAGE -->
 <section class="stage">
   <picture>
     <source media="(max-width:640px)" srcset="images/homepage_bg-mobile.png">
@@ -287,11 +293,10 @@ body{
 
         <p class="copy">
           To browse our models, click Shop Now. When you find something you’d like printed, click Request This Print.
-          It opens your email app with the model name already filled in so we can review your request and reply.
         </p>
 
         <p class="copy copy-center">
-          Questions? Click Email (messages go to a parent-managed inbox).
+          Questions? Click Email.
         </p>
 
         <div class="btnrow">
@@ -303,11 +308,9 @@ body{
   </div>
 </section>
 
-<!-- BELOW SECTION -->
 <section class="below">
   <div class="wrap">
     <div class="infoRow">
-
       <div class="panel" id="about">
         <h2 class="subhead">About 3D Divas</h2>
         <p class="small">
@@ -321,12 +324,10 @@ body{
           Prices shown are “starting at.” Size, color, and quantity can change the final cost. We confirm everything by email before printing.
         </p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <div class="bottombar">
   <div class="wrap">
     <div class="foot">© <span id="year"></span> 3D Divas — Email Requests Only</div>
