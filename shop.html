@@ -1,210 +1,200 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3D Divas Shop</title>
-
-<style>
-:root{
-  --purple:#7c3aed;
-  --panel-bg:rgba(255,255,255,.92);
-  --panel-border:rgba(0,0,0,.08);
-  --radius:16px;
-  --shadow:0 10px 25px rgba(0,0,0,.12);
-}
-
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#f5f5f7;
-}
-
-/* HERO */
-.hero{
-  padding:60px 20px;
-  text-align:center;
-}
-
-.hero .panel{
-  background:var(--panel-bg);
-  border:1px solid var(--panel-border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:30px;
-  margin:auto;
-  max-width:100%;
-}
-
-/* Desktop width */
-@media(min-width:981px){
-  .hero .panel{
-    max-width:520px;
-  }
-}
-
-h1{
-  margin-top:0;
-  color:var(--purple);
-}
-
-/* GRID */
-.shop{
-  padding:40px 20px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  max-width:1200px;
-  margin:auto;
-}
-
-/* CARD */
-.card{
-  background:white;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  transition:.2s ease;
-  cursor:pointer;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-}
-
-.card img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  display:block;
-}
-
-.no-image{
-  height:220px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#eee;
-  font-weight:bold;
-  color:#666;
-}
-
-.card-body{
-  padding:18px;
-}
-
-.card h3{
-  margin:0 0 10px;
-}
-
-.card p{
-  margin:0;
-  font-size:14px;
-  color:#555;
-}
-
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-}
-
-.modal img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-}
-
-.modal.active{
-  display:flex;
-}
-</style>
-</head>
-
-<body>
-
-<section class="hero">
-  <div class="panel">
-    <h1>3D Divas Shop</h1>
-    <p>Fun. Creative. Custom 3D Prints.</p>
-  </div>
-</section>
-
-<section class="shop">
-  <div class="grid" id="modelGrid"></div>
-</section>
-
-<!-- Modal -->
-<div class="modal" id="imageModal" onclick="closeModal()">
-  <img id="modalImage" src="" alt="">
-</div>
-
 <script>
+// =========================
+// CHANGE THIS EMAIL
+// =========================
+const SITE_EMAIL = "YOUR_EMAIL_HERE";
+
+// =========================
+// MODELS
+// =========================
 const models = [
-  { title:"Model 1", description:"Custom print design", image:"images/model1.jpg" },
-  { title:"Model 2", description:"Creative sculpture", image:"images/model2.jpg" },
-  { title:"Model 3", description:"Fun decor item", image:"images/model3.jpg" },
-  { title:"Model 4", description:"Colorful creation", image:"images/model4.jpg" },
-  { title:"Model 5", description:"Unique design", image:"images/model5.jpg" },
-  { title:"Model 6", description:"Modern art print", image:"images/model6.jpg" },
-  { title:"Model 7", description:"Custom display piece", image:"images/model7.jpg" },
-  { title:"Model 8", description:"Limited edition print", image:"images/model8.jpg" }
+  {
+    name: "Flexi Dragon",
+    category: "Fantasy",
+    price: 12,
+    featured: true,
+    sizes: ["Small", "Medium", "Large"],
+    colors: ["Purple", "Blue", "Pink", "Black", "White"],
+    turnaround: "2–5 days",
+    desc: "A fun articulated dragon that wiggles and poses great on a desk.",
+    thumb: "images/thumbs/flexi-dragon.png",
+    image: "images/flexi-dragon.png"
+  },
+  {
+    name: "Cute Axolotl",
+    category: "Animals",
+    price: 10,
+    featured: true,
+    sizes: ["Small", "Medium"],
+    colors: ["Pink", "Mint", "White", "Rainbow (ask)"],
+    turnaround: "2–5 days",
+    desc: "A sweet little axolotl — great gift or shelf buddy.",
+    thumb: "images/thumbs/axolotl.png",
+    image: "images/axolotl.png"
+  },
+  {
+    name: "Fidget Spiral",
+    category: "Fidgets",
+    price: 6,
+    featured: true,
+    sizes: ["One size"],
+    colors: ["Red", "Blue", "Green", "Purple", "Two-tone (ask)"],
+    turnaround: "1–3 days",
+    desc: "A satisfying fidget that spins and clicks gently.",
+    thumb: "images/thumbs/fidget_spiral.png",
+    image: "images/fidget_spiral.png"
+  },
+  {
+    name: "Heart Keychain",
+    category: "Keychains",
+    price: 5,
+    featured: false,
+    sizes: ["Small"],
+    colors: ["Pink", "Red", "White", "Black"],
+    turnaround: "1–3 days",
+    desc: "A simple heart keychain. Add initials by request.",
+    thumb: "images/thumbs/keychain_heart.png",
+    image: "images/keychain_heart.png"
+  },
+  {
+    name: "Desk Name Plate",
+    category: "Personalized",
+    price: 15,
+    featured: false,
+    sizes: ["Short", "Standard", "Long"],
+    colors: ["White", "Black", "Blue", "Two-tone (ask)"],
+    turnaround: "3–7 days",
+    desc: "A custom name plate for desks. Email the name + color choice.",
+    thumb: "images/thumbs/nameplate.png",
+    image: "images/nameplate.png"
+  },
+  {
+    name: "Mini Planter",
+    category: "Home & Decor",
+    price: 9,
+    featured: false,
+    sizes: ["Small", "Medium"],
+    colors: ["White", "Gray", "Blue", "Pink"],
+    turnaround: "2–5 days",
+    desc: "A tiny planter for succulents or desk decor.",
+    thumb: "images/thumbs/mini_planter.png",
+    image: "images/mini_planter.png"
+  },
+  {
+    name: "Snowflake Ornament",
+    category: "Seasonal",
+    price: 7,
+    featured: false,
+    sizes: ["Small", "Medium"],
+    colors: ["White", "Blue"],
+    turnaround: "2–5 days",
+    desc: "Seasonal ornament — lightweight and easy to hang.",
+    thumb: "images/thumbs/ornament_snowflake.png",
+    image: "images/ornament_snowflake.png"
+  }
 ];
 
+// =========================
+// Helpers
+// =========================
+function toUSD(num){
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",
+    currency:"USD"
+  }).format(num);
+}
+
+function buildMailto(model, size, color){
+  const subject = `3D Divas - Print Request: ${model.name}`;
+  const body = `
+Hi Stewart,
+
+I would like to request this 3D print:
+
+Model: ${model.name}
+Category: ${model.category}
+Size: ${size}
+Color: ${color}
+
+Thanks!
+  `;
+  return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// =========================
+// Modal
+// =========================
+const modal = document.getElementById("imgModal");
+const modalImg = document.getElementById("imgModalImg");
+const modalTitle = document.getElementById("imgModalTitle");
+const modalClose = document.getElementById("imgModalClose");
+
+function openModal(src, title){
+  if(!src) return;
+  modalImg.src = src;
+  modalTitle.textContent = title;
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  modal.setAttribute("aria-hidden","true");
+  modalImg.src = "";
+  document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", e=>{
+  if(e.target === modal) closeModal();
+});
+
+// =========================
+// Render
+// =========================
 const grid = document.getElementById("modelGrid");
 
 function render(){
   grid.innerHTML = "";
 
-  models.forEach(m => {
-    const card = document.createElement("div");
+  models.forEach((m, index)=>{
+    const card = document.createElement("article");
     card.className = "card";
 
-    const imageHTML = m.image
-      ? `<img src="${m.image}" alt="${m.title}" loading="lazy">`
-      : `<div class="no-image">Image Coming Soon</div>`;
-
     card.innerHTML = `
-      ${imageHTML}
-      <div class="card-body">
-        <h3>${m.title}</h3>
-        <p>${m.description}</p>
+      <div class="thumb" data-full="${m.image}" data-title="${m.name}" tabindex="0">
+        <img src="${m.thumb || m.image}" alt="${m.name}" loading="lazy">
+      </div>
+
+      <div class="title-row">
+        <div>
+          <h3>${m.name}</h3>
+          <div class="meta" style="margin-top:8px;">
+            <span class="pill">${m.category}</span>
+            ${m.featured ? `<span class="pill accent">Popular</span>` : ""}
+            <span class="pill">Turnaround: ${m.turnaround}</span>
+          </div>
+        </div>
+        <div class="price">From ${toUSD(m.price)}</div>
+      </div>
+
+      <p class="desc">${m.desc}</p>
+
+      <div style="margin-top:auto;">
+        <a class="btn" href="${buildMailto(m, m.sizes[0], m.colors[0])}">
+          ✉️ Request This Print
+        </a>
       </div>
     `;
-
-    if(m.image){
-      card.addEventListener("click", () => openModal(m.image));
-    }
 
     grid.appendChild(card);
   });
 }
 
-function openModal(src){
-  if(!src) return;
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImage");
-  modalImg.src = src;
-  modal.classList.add("active");
-}
-
-function closeModal(){
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImage");
-  modal.classList.remove("active");
-  modalImg.src = "";
-}
+grid.addEventListener("click", e=>{
+  const t = e.target.closest(".thumb");
+  if(!t) return;
+  openModal(t.dataset.full, t.dataset.title);
+});
 
 render();
 </script>
-
-</body>
-</html>
