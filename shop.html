@@ -1,293 +1,700 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>3D Divas — Shop</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Divas — Shop</title>
 
-<style>
-:root{
-  --purple:#3a2a7a;
-  --purple-dark:#2f2168;
+  <style>
+    :root{
+      --purple:#3a2a7a;
+      --purple-2:#2f2168;
+      --ink:#0f172a;
+      --muted:#334155;
 
-  --ink:#0f172a;
-  --muted:#475569;
+      --panel-bg: rgba(255,255,255,.86);
+      --panel-border: rgba(53,51,120,.22);
 
-  --card-bg:#ffffff;
-  --border:rgba(56,54,154,.25);
+      --radius: 18px;
+      --shadow: 0 14px 40px rgba(15, 23, 42, .12);
 
-  --radius:18px;
-  --shadow:0 14px 32px rgba(15,23,42,.12);
+      --content-max: 1200px;
+    }
 
-  --max:1200px;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: #eaf7ef;
+    }
 
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:#dff6e9;
-  color:var(--ink);
-}
+    /* Optional: if you also want a device-swapped background on shop page, add these images */
+    body{
+      background-image: url("images/shop_bg-desktop.png");
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+    @media (max-width: 980px){
+      body{
+        background-image: url("images/shop_bg-tablet.png");
+        background-attachment: scroll;
+      }
+    }
+    @media (max-width: 640px){
+      body{
+        background-image: url("images/shop_bg-mobile.png");
+        background-attachment: scroll;
+      }
+    }
 
-/* ===== Layout ===== */
+    .topbar, .bottombar{
+      background: linear-gradient(180deg, var(--purple), var(--purple-2));
+      color: #fff;
+    }
+    .topbar{
+      border-bottom: 2px solid rgba(255,255,255,.15);
+    }
+    .bottombar{
+      border-top: 2px solid rgba(255,255,255,.15);
+      margin-top: 28px;
+    }
+    .wrap{
+      width: min(var(--content-max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 0;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      text-decoration:none;
+      color:#fff;
+      min-width: 180px;
+    }
+    .brand strong{ font-size: 16px; line-height:1.1; }
+    .brand small{ font-size: 12px; opacity:.9; line-height:1.1; }
 
-.wrap{
-  width:min(var(--max),calc(100% - 32px));
-  margin:0 auto;
-}
+    .links{
+      display:flex;
+      align-items:center;
+      gap: 18px;
+      flex-wrap:wrap;
+    }
+    .links a{
+      color:#fff;
+      text-decoration:none;
+      font-weight: 800;
+      font-size: 14px;
+      opacity: .95;
+    }
+    .links a:hover{ text-decoration: underline; }
 
-/* ===== Top / Bottom Bars ===== */
+    /* Full-width banner (same as home) */
+    .banner{
+      width: 100%;
+      display:block;
+      border-bottom: 2px solid rgba(53,51,120,.35);
+      background: rgba(0,0,0,.08);
+    }
+    .banner picture, .banner img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
 
-.topbar,.bottombar{
-  background:linear-gradient(180deg,var(--purple),var(--purple-dark));
-  color:#fff;
-}
+    main{ padding: 18px 0 14px; }
 
-.nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 0;
-  flex-wrap:wrap;
-}
+    .hint{
+      font-size: 13px;
+      color: rgba(30,41,59,.85);
+      margin: 6px 0 10px;
+    }
 
-.brand{
-  text-decoration:none;
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-}
+    .toolbar{
+      display:grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 12px;
+      align-items:center;
+      padding: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(53,51,120,.18);
+      box-shadow: 0 10px 28px rgba(15,23,42,.10);
+      backdrop-filter: blur(6px);
+    }
+    @media (max-width: 980px){
+      .toolbar{
+        grid-template-columns: 1fr 1fr;
+        border-radius: 22px;
+      }
+    }
+    @media (max-width: 640px){
+      .toolbar{
+        grid-template-columns: 1fr;
+      }
+    }
 
-.brand strong{font-size:16px;}
-.brand small{font-size:12px;opacity:.9;}
+    .input, .select{
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(53,51,120,.18);
+      background: rgba(255,255,255,.9);
+      outline:none;
+      font-size: 14px;
+    }
+    .input:focus, .select:focus{
+      box-shadow: 0 0 0 4px rgba(123,140,222,.22);
+    }
 
-.links{
-  display:flex;
-  gap:20px;
-}
+    .results{
+      font-size: 13px;
+      color: rgba(30,41,59,.75);
+      white-space: nowrap;
+      text-align:right;
+      padding-right: 6px;
+    }
+    @media (max-width: 980px){
+      .results{ text-align:left; }
+    }
 
-.links a{
-  color:#fff;
-  text-decoration:none;
-  font-weight:800;
-}
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+    }
 
-.links a:hover{ text-decoration:underline; }
+    .card{
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      backdrop-filter: blur(6px);
+      min-height: 340px;
+    }
 
-.foot{
-  padding:14px 0;
-  text-align:center;
-  font-weight:800;
-  font-size:13px;
-}
+    .thumb{
+      border-radius: 14px;
+      border: 1px dashed rgba(53,51,120,.25);
+      overflow:hidden;
+      height: 160px;
+      background: linear-gradient(135deg, rgba(123,140,222,.16), rgba(255,255,255,.6));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      position:relative;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .thumb::after{
+      content:"Click to preview";
+      position:absolute;
+      left: 10px;
+      bottom: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(255,255,255,.95);
+      background: rgba(47,33,104,.72);
+      padding: 6px 10px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: opacity .15s ease;
+    }
+    .thumb:hover::after{ opacity: 1; }
 
-/* ===== Page Header ===== */
+    .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .title{
+      margin:0;
+      font-size: 16px;
+      font-weight: 950;
+      color:#2b2a72;
+    }
+    .price{
+      font-weight: 950;
+      color:#2b2a72;
+      white-space: nowrap;
+      font-size: 14px;
+    }
 
-.page-header{
-  padding:36px 0 18px;
-}
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+    }
+    .pill{
+      font-size: 12px;
+      font-weight: 900;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(53,51,120,.18);
+      background: rgba(123,140,222,.14);
+      color: rgba(47,33,104,.95);
+    }
+    .pill.pop{
+      background: rgba(224,119,125,.16);
+      border-color: rgba(224,119,125,.22);
+      color: #7a1c22;
+    }
 
-.page-title{
-  margin:0 0 8px;
-  font-size:clamp(26px,3vw,36px);
-  color:#2b2a72;
-}
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
-.page-sub{
-  margin:0;
-  color:var(--muted);
-}
+    .fieldRow{
+      display:grid;
+      grid-template-columns: 70px 1fr;
+      align-items:center;
+      gap: 10px;
+    }
+    .label{
+      font-size: 12px;
+      color: rgba(30,41,59,.75);
+      font-weight: 800;
+    }
 
-/* ===== Product Grid ===== */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight: 950;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,.35);
+      user-select:none;
+      cursor:pointer;
+      background: linear-gradient(180deg, #2f2b84, #2a256e);
+      color:#fff;
+      box-shadow: 0 10px 24px rgba(15,23,42,.10);
+      margin-top:auto;
+    }
+    .btn:hover{ filter: brightness(1.05); }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
-  padding:24px 0 40px;
-}
+    .btnNote{
+      font-size: 12px;
+      color: rgba(30,41,59,.75);
+      margin-top: 6px;
+    }
 
-.card{
-  background:var(--card-bg);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+    .foot{
+      padding: 14px 0;
+      text-align:center;
+      font-weight: 800;
+      font-size: 13px;
+      opacity: .95;
+    }
 
-.card img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:12px;
-}
+    /* === Modal popup for larger image === */
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 9999;
+    }
+    .modal.open{ display:flex; }
 
-.card h3{
-  margin:0;
-  font-size:18px;
-  color:#2b2a72;
-}
+    .modalCard{
+      width: min(980px, 100%);
+      background: rgba(255,255,255,.96);
+      border-radius: 18px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.25);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.4);
+    }
+    .modalTop{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(58,42,122,.92), rgba(47,33,104,.92));
+      color:#fff;
+    }
+    .modalTitle{
+      font-weight: 950;
+      font-size: 14px;
+      margin:0;
+    }
+    .closeBtn{
+      border: none;
+      background: rgba(255,255,255,.18);
+      color:#fff;
+      font-weight: 950;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor:pointer;
+    }
+    .closeBtn:hover{ filter: brightness(1.05); }
 
-.price{
-  font-weight:800;
-  color:#111827;
-}
-
-.desc{
-  font-size:14px;
-  color:var(--muted);
-  line-height:1.5;
-}
-
-/* ===== Buttons ===== */
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:12px 16px;
-  border-radius:999px;
-  font-weight:900;
-  text-decoration:none;
-  cursor:pointer;
-}
-
-.btn-request{
-  background:linear-gradient(180deg,#2f2b84,#2a256e);
-  color:#fff;
-  box-shadow:0 14px 30px rgba(15,23,42,.14);
-}
-
-.btn-request:hover{ filter:brightness(1.05); }
-
-.btn-back{
-  margin-top:10px;
-  display:inline-block;
-  font-weight:800;
-  color:#2b2a72;
-  text-decoration:none;
-}
-
-.btn-back:hover{ text-decoration:underline; }
-</style>
+    .modalBody{
+      padding: 14px;
+      display:grid;
+      gap: 12px;
+    }
+    .modalBody img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius: 14px;
+      border: 1px solid rgba(53,51,120,.18);
+    }
+    .modalCaption{
+      font-size: 13px;
+      color: rgba(30,41,59,.8);
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- TOP PURPLE BAR -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html" aria-label="3D Divas Home">
+          <strong>3D Divas</strong>
+          <small>3D Printed Creations</small>
+        </a>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="wrap">
-    <div class="nav">
-      <a class="brand" href="index.html">
-        <strong>3D Divas</strong>
-        <small>3D Printed Creations</small>
-      </a>
-      <div class="links">
-        <a href="index.html">Home</a>
-        <a href="#">Email</a>
+        <div class="links" aria-label="Top navigation">
+          <a href="shop.html">Shop</a>
+          <a id="emailTop" href="#">Email</a>
+          <a href="index.html#about">About Us</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- PAGE HEADER -->
-<section class="page-header">
-  <div class="wrap">
-    <h1 class="page-title">Shop Our Models</h1>
-    <p class="page-sub">
-      Click “Request This Print” and your email app will open with the model name ready to send.
-    </p>
+  <!-- FULL-WIDTH BANNER -->
+  <div class="banner" aria-label="Banner">
+    <picture>
+      <source media="(max-width: 640px)" srcset="images/banner-mobile.png 1x, images/banner-mobile@2x.png 2x">
+      <source media="(max-width: 980px)" srcset="images/banner-tablet.png 1x, images/banner-tablet@2x.png 2x">
+      <img src="images/banner-desktop.png" srcset="images/banner-desktop.png 1x, images/banner-desktop@2x.png 2x" alt="3D Divas banner">
+    </picture>
   </div>
-</section>
 
-<!-- PRODUCT GRID -->
-<section>
-  <div class="wrap">
-    <div class="grid">
+  <main>
+    <div class="wrap">
+      <div class="hint">Click a thumbnail to preview full-size.</div>
 
-      <!-- ITEM 1 -->
-      <div class="card">
-        <img src="images/model1.jpg" alt="">
-        <h3>Mini Chicken Figurine</h3>
-        <div class="price">Starting at $5</div>
-        <p class="desc">
-          Cute mini chicken perfect for desks, gifts, or collections.
-        </p>
-        <a class="btn btn-request" href="#" onclick="requestPrint('Mini Chicken Figurine', '$5')">
-          Request This Print
-        </a>
+      <div class="toolbar" aria-label="Search and filters">
+        <input class="input" id="searchInput" type="search" placeholder="Search models (ex: dragon, keychain, planter…)" />
+
+        <select class="select" id="categoryFilter" aria-label="Category">
+          <option value="all">All categories</option>
+        </select>
+
+        <select class="select" id="sortSelect" aria-label="Sort">
+          <option value="featured">Sort: Featured</option>
+          <option value="priceLow">Price: Low to High</option>
+          <option value="priceHigh">Price: High to Low</option>
+          <option value="nameAZ">Name: A to Z</option>
+        </select>
+
+        <div class="results" id="resultsCount">0 models shown</div>
       </div>
 
-      <!-- ITEM 2 -->
-      <div class="card">
-        <img src="images/model2.jpg" alt="">
-        <h3>Custom Name Keychain</h3>
-        <div class="price">Starting at $8</div>
-        <p class="desc">
-          Personalized keychains in your favorite colors.
-        </p>
-        <a class="btn btn-request" href="#" onclick="requestPrint('Custom Name Keychain', '$8')">
-          Request This Print
-        </a>
-      </div>
-
-      <!-- ITEM 3 -->
-      <div class="card">
-        <img src="images/model3.jpg" alt="">
-        <h3>Articulated Dragon</h3>
-        <div class="price">Starting at $15</div>
-        <p class="desc">
-          Flexible dragon with movable joints. Fun and detailed!
-        </p>
-        <a class="btn btn-request" href="#" onclick="requestPrint('Articulated Dragon', '$15')">
-          Request This Print
-        </a>
-      </div>
-
+      <section class="grid" id="grid" aria-label="Model cards"></section>
     </div>
+  </main>
 
-    <a class="btn-back" href="index.html">← Back to Home</a>
-
+  <!-- BOTTOM PURPLE BAR -->
+  <div class="bottombar">
+    <div class="wrap">
+      <div class="foot">© <span id="year"></span> 3D Divas — Email Requests Only</div>
+    </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<div class="bottombar">
-  <div class="wrap">
-    <div class="foot">© <span id="year"></span> 3D Divas — Email Requests Only</div>
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Image preview">
+    <div class="modalCard">
+      <div class="modalTop">
+        <p class="modalTitle" id="modalTitle">Preview</p>
+        <button class="closeBtn" id="closeBtn" type="button">Close</button>
+      </div>
+      <div class="modalBody">
+        <img id="modalImg" alt="Preview image">
+        <div class="modalCaption" id="modalCaption"></div>
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-const SITE_EMAIL = "YOUR_EMAIL_HERE";
-
-function requestPrint(modelName, price){
-  const subject = `3D Divas Print Request - ${modelName}`;
-  const body =
+  <script>
+    // ======= CONFIG =======
+    const SITE_EMAIL = "YOUR_EMAIL_HERE"; // <-- change this
+    function buildMailto(modelName, size, color){
+      const subject = `3D Divas - Print Request: ${modelName}`;
+      const body =
 `Hi Stewart,
 
-I would like to request the following print:
+I would like to request this 3D print:
 
 Model: ${modelName}
-Starting Price: ${price}
+Size: ${size || "Not selected"}
+Color: ${color || "Not selected"}
+Quantity: 1
 
-Color:
-Size:
-Quantity:
+Notes / personalization (optional):
+-
 
-Thank you!`;
+Thanks!`;
+      return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    function generalMailto(){
+      const subject = "3D Divas - Question";
+      const body =
+`Hi Stewart,
 
-  window.location.href =
-    `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+I have a question about 3D Divas.
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-</script>
+My question:
+-
 
+Thanks!`;
+      return `mailto:${SITE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    document.getElementById("emailTop").href = generalMailto();
+
+    // ======= MODELS (edit these) =======
+    // imageThumb = what shows on the card
+    // imageLarge = what shows in the popup
+    const models = [
+      {
+        name: "Cute Axolotl",
+        category: "Animals",
+        price: 10,
+        featured: true,
+        turnaround: "2–5 days",
+        desc: "A sweet little axolotl — great gift or shelf buddy.",
+        sizes: ["Small", "Medium"],
+        colors: ["Pink", "Mint", "White"],
+        imageThumb: "images/models/axolotl-thumb.png",
+        imageLarge: "images/models/axolotl-large.png"
+      },
+      {
+        name: "Flexi Dragon",
+        category: "Fantasy",
+        price: 12,
+        featured: true,
+        turnaround: "2–5 days",
+        desc: "Articulated dragon that wiggles and poses great on a desk.",
+        sizes: ["Small", "Medium", "Large"],
+        colors: ["Purple", "Blue", "Black"],
+        imageThumb: "images/models/dragon-thumb.png",
+        imageLarge: "images/models/dragon-large.png"
+      }
+      // Add more…
+    ];
+
+    // ======= UI =======
+    const grid = document.getElementById("grid");
+    const resultsCount = document.getElementById("resultsCount");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const sortSelect = document.getElementById("sortSelect");
+
+    // Modal
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCaption = document.getElementById("modalCaption");
+    const closeBtn = document.getElementById("closeBtn");
+
+    function openModal(title, imgSrc, caption){
+      modalTitle.textContent = title;
+      modalImg.src = imgSrc;
+      modalImg.alt = title;
+      modalCaption.textContent = caption || "";
+      modal.classList.add("open");
+    }
+    function closeModal(){
+      modal.classList.remove("open");
+      modalImg.src = "";
+    }
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e)=>{
+      if(e.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape") closeModal();
+    });
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function usd(n){
+      try { return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(n); }
+      catch { return "$" + Number(n).toFixed(2); }
+    }
+
+    // Build category options
+    const cats = Array.from(new Set(models.map(m => m.category))).sort((a,b)=>a.localeCompare(b));
+    for(const c of cats){
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      categoryFilter.appendChild(opt);
+    }
+
+    function matches(m, q, cat){
+      const hay = [m.name, m.category, m.desc, m.turnaround, ...(m.sizes||[]), ...(m.colors||[])].join(" ").toLowerCase();
+      const qOk = !q || hay.includes(q);
+      const cOk = cat === "all" || m.category === cat;
+      return qOk && cOk;
+    }
+
+    function sortList(list, mode){
+      const a = [...list];
+      if(mode === "priceLow") a.sort((x,y)=>x.price - y.price);
+      else if(mode === "priceHigh") a.sort((x,y)=>y.price - x.price);
+      else if(mode === "nameAZ") a.sort((x,y)=>x.name.localeCompare(y.name));
+      else{
+        a.sort((x,y)=>{
+          const xf = x.featured ? 1 : 0;
+          const yf = y.featured ? 1 : 0;
+          if(yf !== xf) return yf - xf;
+          return x.name.localeCompare(y.name);
+        });
+      }
+      return a;
+    }
+
+    function render(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+      const cat = categoryFilter.value;
+      const mode = sortSelect.value;
+
+      const filtered = models.filter(m => matches(m, q, cat));
+      const sorted = sortList(filtered, mode);
+
+      resultsCount.textContent = `${sorted.length} model${sorted.length===1?"":"s"} shown`;
+
+      if(sorted.length === 0){
+        grid.innerHTML = `<div class="card" style="grid-column:1/-1;">
+          <h3 class="title">No matches</h3>
+          <p class="desc">Try a different search or choose “All categories”.</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = sorted.map((m, i) => {
+        const sizeId = `size_${i}`;
+        const colorId = `color_${i}`;
+        const btnId = `btn_${i}`;
+
+        const sizeOpts = (m.sizes || ["One size"]).map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+        const colorOpts = (m.colors || ["Ask"]).map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+
+        return `
+          <article class="card">
+            <div class="thumb" data-large="${escapeHtml(m.imageLarge || m.imageThumb)}" data-title="${escapeHtml(m.name)}" data-caption="${escapeHtml(m.desc)}">
+              ${m.imageThumb ? `<img src="${escapeHtml(m.imageThumb)}" alt="${escapeHtml(m.name)} thumbnail" loading="lazy">` : `<span>3D Divas</span>`}
+            </div>
+
+            <div class="row">
+              <h3 class="title">${escapeHtml(m.name)}</h3>
+              <div class="price">From ${escapeHtml(usd(m.price))}</div>
+            </div>
+
+            <div class="pills">
+              <span class="pill">${escapeHtml(m.category)}</span>
+              ${m.featured ? `<span class="pill pop">Popular</span>` : ``}
+              <span class="pill">Turnaround: ${escapeHtml(m.turnaround || "Ask")}</span>
+            </div>
+
+            <p class="desc">${escapeHtml(m.desc || "")}</p>
+
+            <div class="fieldRow">
+              <div class="label">Size</div>
+              <select class="select" id="${sizeId}">${sizeOpts}</select>
+            </div>
+
+            <div class="fieldRow">
+              <div class="label">Color</div>
+              <select class="select" id="${colorId}">${colorOpts}</select>
+            </div>
+
+            <a class="btn" id="${btnId}" href="#">Request This Print</a>
+            <div class="btnNote">Email opens with the details filled in.</div>
+          </article>
+        `;
+      }).join("");
+
+      // Hook up modal + mailto buttons
+      const thumbs = grid.querySelectorAll(".thumb");
+      thumbs.forEach(t => {
+        t.addEventListener("click", ()=>{
+          openModal(t.dataset.title, t.dataset.large, t.dataset.caption);
+        });
+      });
+
+      sorted.forEach((m, i)=>{
+        const sizeEl = document.getElementById(`size_${i}`);
+        const colorEl = document.getElementById(`color_${i}`);
+        const btnEl = document.getElementById(`btn_${i}`);
+
+        function update(){
+          btnEl.href = buildMailto(m.name, sizeEl.value, colorEl.value);
+        }
+        sizeEl.addEventListener("change", update);
+        colorEl.addEventListener("change", update);
+        update();
+      });
+    }
+
+    searchInput.addEventListener("input", render);
+    categoryFilter.addEventListener("change", render);
+    sortSelect.addEventListener("change", render);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    render();
+  </script>
 </body>
 </html>
